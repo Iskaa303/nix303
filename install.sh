@@ -49,7 +49,7 @@ echo -e "${DIM}Selected Disk: $DISK_ID${RESET}\n"
 
 # Auto-calculate and prompt swap size
 RAM_GB=$(free -g | awk '/^Mem:/{print $2}')
-DISK_GB=$(lsblk -bno SIZE "$DISK_ID" | awk '{print int($1/1024/1024/1024)}')
+DISK_GB=$(lsblk -dbno SIZE "$DISK_ID" | head -n1 | awk '{print int($1/1024/1024/1024)}')
 LIMIT=$(( DISK_GB / 4 ))
 DOUBLE_RAM=$(( RAM_GB * 2 ))
 
