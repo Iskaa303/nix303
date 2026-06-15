@@ -22,6 +22,7 @@
               content = {
                 type = "luks";
                 name = "crypted";
+                passwordFile = "/tmp/secret.key";
                 settings = {
                   allowDiscards = true;
                 };
@@ -54,7 +55,7 @@
         fsType = "tmpfs";
         mountOptions = [
           "defaults"
-          "size=2G"
+          "size=25%"
           "mode=755"
         ];
       };
