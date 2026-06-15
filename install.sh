@@ -50,7 +50,19 @@ echo -e "${DIM}Selected Disk: $DISK_ID${RESET}\n"
 # Auto-calculate and prompt swap size
 RAM_GB=$(free -g | awk '/^Mem:/{print $2}')
 DISK_GB=$(lsblk -bno SIZE "$DISK_ID" | awk '{print int($1/1024/1024/1024)}')
-DEFAULT_SWAP=$(( RAM_GB * 2 < DISK_GB / 4 ? RAM_GB * 2 : DISK_GB / 4 ))
+LIMIT=$(( DISK_GB / 4 ))
+DOUBLE_RAM=$(( RAM_GB * 2 ))
+
+if [ "$DOUBLE_RAM" -lt "$LIMIT" ]; then
+    DEFAULT_SWAP=$DOUBLE_RAM
+else
+    DEFAULT_SWAP=$LIMIT
+fi
+
+# Ensure DEFAULT_SWAP is at least 1 if integer division dropped it to 0
+if [ "$DEFAULT_SWAP" -le 0 ]; then
+    DEFAULT_SWAP=2
+fi
 
 read -p "$(echo -e "${CLR1B}?${RESET} ${BOLD}Enter swap size [Default: ${DEFAULT_SWAP}G]:${RESET} ")" SWAP_SIZE
 SWAP_SIZE="${SWAP_SIZE:-${DEFAULT_SWAP}G}"
