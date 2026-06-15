@@ -13,7 +13,7 @@
   # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.systemd.enabled = true;
+  boot.initrd.systemd.enable = true;
 
   networking.hostName = "fuck-machine";
   networking.networkmanager.enable = true;
