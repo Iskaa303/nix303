@@ -88,7 +88,7 @@ fi
 
 # mkpasswd requires the whois or mkpasswd package, so run it via nix shell just in case.
 echo -e "${DIM}Generating password hash...${RESET}"
-ROOT_HASH=$(nix --experimental-features "nix-command flakes" run nixpkgs#mkpasswd -- -m sha-512 "$ROOT_PASS")
+ROOT_HASH=$(mkpasswd -- -m sha-512 "$ROOT_PASS")
 unset ROOT_PASS ROOT_PASS_CONFIRM
 
 # Run Disko Partitioning / Formatting
