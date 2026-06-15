@@ -19,11 +19,32 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 # Prompt target disk (by-id)
-echo -e "${CLR2B}*${RESET} ${BOLD}Select target disk (by-id):${RESET}"
-select disk in $(ls /dev/disk/by-id/ | grep -v 'part'); do
-    DISK_ID="/dev/disk/by-id/$disk"
-    break
+echo -e "${CLR2B}*${RESET} ${BOLD}Select target disk:${RESET}"
+
+# Create an array of options
+options=()
+while read -r id size; do
+    if [ -n "$id" ] && [ -n "$size" ]; then
+        options+=("$id ($size)")
+    fi
+done < <(ls -l /dev/disk/by-id/ | grep -v 'part' | awk '{print $9}' | while read -r id; do
+    if [ -n "$id" ] && [ -e "/dev/disk/by-id/$id" ]; then
+        size=$(lsblk -dno SIZE "/dev/disk/by-id/$id" 2>/dev/null || echo "Unknown")
+        echo "$id $size"
+    fi
+done)
+
+# Display the menu
+select choice in "${options[@]}"; do
+    if [ -n "$choice" ]; then
+        disk=$(echo "$choice" | awk '{print $1}')
+        DISK_ID="/dev/disk/by-id/$disk"
+        break
+    else
+        echo -e "${BOLD_RED}Invalid selection. Please try again.${RESET}"
+    fi
 done
+
 echo -e "${DIM}Selected Disk: $DISK_ID${RESET}\n"
 
 # Auto-calculate and prompt swap size
