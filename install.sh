@@ -20,7 +20,6 @@ fi
 
 # Prompt target disk (by-id)
 echo -e "${CLR2B}*${RESET} ${BOLD}Select target disk:${RESET}"
-echo -e "${BOLD_RED}!!! WARNING: This will erase all data on the selected disk.${RESET}"
 
 # Create an array of options
 options=()
@@ -47,19 +46,6 @@ select choice in "${options[@]}"; do
 done
 
 echo -e "${DIM}Selected Disk: $DISK_ID${RESET}\n"
-echo -e "${BOLD_RED}!!! WARNING: Wiping all signatures and partition tables on $DISK_ID !!!${RESET}"
-
-# Forcefully clear all filesystem, RAID, and partition signatures
-wipefs --all --force "$DISK_ID"
-
-# Zero out the first 100MB to obliterate primary GPT/MBR data structures
-dd if=/dev/zero of="$DISK_ID" bs=1M count=100 conv=fdatasync status=none
-
-# Inform the kernel of partition changes so it drops old nodes
-partprobe "$DISK_ID" || true
-udevadm settle
-
-echo -e "${CLR1B}Disk successfully wiped clean.${RESET}\n"
 
 # Auto-calculate and prompt swap size
 RAM_GB=$(free -g | awk '/^Mem:/{print $2}')
