@@ -157,6 +157,10 @@ while true; do
     echo ""
     read -rs -p "$(echo -e "${DIM}>${RESET} ${BOLD}Confirm:${RESET} ")" ROOT_PASS_CONFIRM
     echo ""
+    if [ -z "$ROOT_PASS" ]; then
+        print_status "FAILED" "Password cannot be empty"
+        continue
+    fi
     if [[ "$ROOT_PASS" == "$ROOT_PASS_CONFIRM" ]]; then
         break
     fi
@@ -178,18 +182,17 @@ while true; do
     echo ""
     read -rs -p "$(echo -e "${DIM}>${RESET} ${BOLD}Confirm:${RESET} ")" USER_PASS_CONFIRM
     echo ""
+    if [ -z "$USER_PASS" ]; then
+        print_status "FAILED" "Password cannot be empty"
+        continue
+    fi
     if [[ "$USER_PASS" == "$USER_PASS_CONFIRM" ]]; then
         break
     fi
     print_status "FAILED" "Passwords do not match, try again"
 done
-if [ -n "$USER_PASS" ]; then
-    echo -e "${DIM}Generating password hash...${RESET}"
-    USER_HASH=$(mkpasswd -m sha-512 "$USER_PASS")
-else
-    USER_HASH=""
-    echo -e "${DIM}No password set for ${USERNAME}.${RESET}"
-fi
+echo -e "${DIM}Generating password hash...${RESET}"
+USER_HASH=$(mkpasswd -m sha-512 "$USER_PASS")
 unset USER_PASS USER_PASS_CONFIRM
 echo ""
 
@@ -249,22 +252,12 @@ mkdir -p /mnt/persist/passwords
 echo -n "$ROOT_HASH" > /mnt/persist/passwords/root
 chmod 600 /mnt/persist/passwords/root
 
-if [ -n "$USER_HASH" ]; then
-    echo -n "$USER_HASH" > "/mnt/persist/passwords/$USERNAME"
-    chmod 600 "/mnt/persist/passwords/$USERNAME"
-fi
+echo -n "$USER_HASH" > "/mnt/persist/passwords/$USERNAME"
+chmod 600 "/mnt/persist/passwords/$USERNAME"
 echo ""
 
-print_status "INFO" "Generating user configuration..."
-cat <<EOF > "$SCRIPT_DIR/hosts/$HOST/_user.nix"
-{ ... }: {
-  users.users."$USERNAME" = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "audio" "usb" "video" "networkmanager" ];
-    $(if [ -n "$USER_HASH" ]; then echo "hashedPasswordFile = \"/persist/passwords/$USERNAME\";"; fi)
-  };
-}
-EOF
+print_status "INFO" "Updating user configuration..."
+sed -i "s/username ? \".*\"/username ? \"$USERNAME\"/" "$SCRIPT_DIR/hosts/$HOST/_user.nix"
 git -C "$SCRIPT_DIR" add "hosts/$HOST/_user.nix"
 echo ""
 
