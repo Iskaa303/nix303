@@ -57,9 +57,26 @@ prompt_input() {
 	read -r "$var_name"
 }
 
+AUTO_CONFIRM=false
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -y|--yes)
+            AUTO_CONFIRM=true
+            shift
+            ;;
+        *)
+            shift
+            ;;
+    esac
+done
+
 prompt_confirm() {
 	local prompt="$1"
 	local color="${2:-$DIM}"
+	if [[ "$AUTO_CONFIRM" == "true" ]]; then
+		echo -e "${color}>${RESET} ${BOLD}${prompt}${RESET} ${DIM}[y/n]${RESET}: ${CLR1B}y (auto-confirmed)${RESET}"
+		return 0
+	fi
 	while true; do
 		read -rp "$(echo -e "${color}>${RESET} ${BOLD}${prompt}${RESET} ${DIM}[y/n]${RESET}: ")" response
 		case "$response" in
