@@ -257,8 +257,8 @@ chmod 600 "/mnt/persist/passwords/$USERNAME"
 echo ""
 
 print_status "INFO" "Updating user configuration..."
-sed -i "s/username ? \".*\"/username ? \"$USERNAME\"/" "$SCRIPT_DIR/hosts/$HOST/_user.nix"
-git -C "$SCRIPT_DIR" add "hosts/$HOST/_user.nix"
+echo "\"$USERNAME\"" > "$SCRIPT_DIR/hosts/$HOST/username.nix"
+git -C "$SCRIPT_DIR" add "hosts/$HOST/username.nix"
 echo ""
 
 print_status "INFO" "Generating hardware configurations..."

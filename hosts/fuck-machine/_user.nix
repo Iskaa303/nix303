@@ -1,4 +1,7 @@
-{ username ? "iskaa303", ... }: {
+{ ... }:
+let
+  username = import ./username.nix;
+in {
   users.users."${username}" = {
     isNormalUser = true;
     extraGroups = [ "wheel" "audio" "usb" "video" "networkmanager" ];
