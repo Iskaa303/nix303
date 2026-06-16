@@ -11,6 +11,7 @@
       feature_desktop
       feature_niri
       feature_noctalia
+      feature_home-manager
     ]);
 
     boot.initrd.systemd.enable = true;
@@ -48,6 +49,6 @@
     users.mutableUsers = false;
     users.users.root.hashedPasswordFile = "/persist/passwords/root";
 
-    system.stateVersion = "26.11";
+    system.stateVersion = "26.05";
   };
 }
