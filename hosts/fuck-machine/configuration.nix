@@ -3,22 +3,16 @@
     imports = [
       inputs.preservation.nixosModules.default
       ./_hardware-configuration.nix
+      ./_user.nix
     ] ++ (with config.flake.modules.nixos; [
+      bootloader_grub
+      login-manager_ly
       feature_base
       feature_desktop
       feature_niri
       feature_noctalia
     ]);
 
-    # Bootloader
-    boot.loader.timeout = 2;
-    boot.loader.efi.canTouchEfiVariables = true;
-    boot.loader.efi.efiSysMountPoint = "/boot";
-    boot.loader.grub = {
-      enable = true;
-      device = "nodev";
-      efiSupport = true;
-    };
     boot.initrd.systemd.enable = true;
 
     networking.hostName = "fuck-machine";
@@ -50,8 +44,7 @@
     };
 
     users.mutableUsers = false;
-    users.users.root.hashedPasswordFile = "/persist/passwords/root";
 
-    system.stateVersion = "26.05";
+    system.stateVersion = "26.11";
   };
 }

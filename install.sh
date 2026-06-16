@@ -167,9 +167,36 @@ ROOT_HASH=$(mkpasswd -m sha-512 "$ROOT_PASS")
 unset ROOT_PASS ROOT_PASS_CONFIRM
 echo ""
 
+# Normal User
+print_status "PROMPT" "Create Normal User"
+prompt_input "Username: " USERNAME "$CLR1"
+echo ""
+
+print_status "PROMPT" "Set Password for ${USERNAME}"
+while true; do
+    read -rs -p "$(echo -e "${DIM}>${RESET} ${BOLD}Password:${RESET} ")" USER_PASS
+    echo ""
+    read -rs -p "$(echo -e "${DIM}>${RESET} ${BOLD}Confirm:${RESET} ")" USER_PASS_CONFIRM
+    echo ""
+    if [[ "$USER_PASS" == "$USER_PASS_CONFIRM" ]]; then
+        break
+    fi
+    print_status "FAILED" "Passwords do not match, try again"
+done
+if [ -n "$USER_PASS" ]; then
+    echo -e "${DIM}Generating password hash...${RESET}"
+    USER_HASH=$(mkpasswd -m sha-512 "$USER_PASS")
+else
+    USER_HASH=""
+    echo -e "${DIM}No password set for ${USERNAME}.${RESET}"
+fi
+unset USER_PASS USER_PASS_CONFIRM
+echo ""
+
 # Confirmations
 print_status "PROMPT" "Ready to format and install"
 echo -e "${DIM}│${RESET} Host: ${CLR2}${HOST}${RESET}"
+echo -e "${DIM}│${RESET} User: ${CLR1}${USERNAME}${RESET}"
 echo -e "${DIM}│${RESET} Disk: ${CLR1}${DISK_ID}${RESET}"
 echo -e "${DIM}│${RESET} Swap: ${CLR2}${SWAP_SIZE}${RESET}"
 print_status "WARNING" "The chosen disk will be formatted and ALL DATA will be destroyed."
@@ -217,10 +244,28 @@ nix --experimental-features "nix-command flakes" \
     "$SCRIPT_DIR/hosts/$HOST/_disko.nix"
 echo ""
 
-print_status "INFO" "Setting up root password hash..."
+print_status "INFO" "Setting up passwords..."
 mkdir -p /mnt/persist/passwords
 echo -n "$ROOT_HASH" > /mnt/persist/passwords/root
 chmod 600 /mnt/persist/passwords/root
+
+if [ -n "$USER_HASH" ]; then
+    echo -n "$USER_HASH" > "/mnt/persist/passwords/$USERNAME"
+    chmod 600 "/mnt/persist/passwords/$USERNAME"
+fi
+echo ""
+
+print_status "INFO" "Generating user configuration..."
+cat <<EOF > "$SCRIPT_DIR/hosts/$HOST/_user.nix"
+{ ... }: {
+  users.users."$USERNAME" = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" "audio" "usb" "video" "networkmanager" ];
+    $(if [ -n "$USER_HASH" ]; then echo "hashedPasswordFile = \"/persist/passwords/$USERNAME\";"; fi)
+  };
+}
+EOF
+git -C "$SCRIPT_DIR" add "hosts/$HOST/_user.nix"
 echo ""
 
 print_status "INFO" "Generating hardware configurations..."
