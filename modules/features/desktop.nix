@@ -1,6 +1,8 @@
-{ pkgs, ... }: {
-  environment.systemPackages = with pkgs; [
-    firefox
-    ghostty
-  ];
+{ ... }: {
+  flake.modules.nixos.feature_desktop = { pkgs, ... }: {
+    environment.systemPackages = with pkgs; [
+      firefox
+      ghostty
+    ];
+  };
 }

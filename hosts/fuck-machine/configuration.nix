@@ -1,50 +1,53 @@
-{ config, pkgs, inputs, ... }: {
-  imports = [
-    inputs.disko.nixosModules.default
-    inputs.preservation.nixosModules.default
-    ./disko.nix
-    ./hardware-configuration.nix
-    ../../modules/features/base.nix
-    ../../modules/features/desktop.nix
-    ../../modules/features/niri.nix
-    ../../modules/features/noctalia.nix
-  ];
+{ config, ... }: {
+  flake.modules.nixos.fuck-machine = { pkgs, inputs, ... }: {
+    imports = [
+      inputs.disko.nixosModules.default
+      inputs.preservation.nixosModules.default
+      ./_disko.nix
+      ./_hardware-configuration.nix
+    ] ++ (with config.flake.modules.nixos; [
+      feature_base
+      feature_desktop
+      feature_niri
+      feature_noctalia
+    ]);
 
-  # Bootloader
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.systemd.enable = true;
+    # Bootloader
+    boot.loader.systemd-boot.enable = true;
+    boot.loader.efi.canTouchEfiVariables = true;
+    boot.initrd.systemd.enable = true;
 
-  networking.hostName = "fuck-machine";
-  networking.networkmanager.enable = true;
+    networking.hostName = "fuck-machine";
+    networking.networkmanager.enable = true;
 
-  time.timeZone = "UTC"; 
+    time.timeZone = "UTC"; 
 
-  preservation = {
-    enable = true;
-    preserveAt."/persist" = {
-      directories = [
-        "/etc/nixos"
-        "/var/log"
-        "/var/lib/nixos"
-        "/var/lib/systemd/coredump"
-        "/var/lib/NetworkManager"
-      ];
-      files = [
-        "/etc/machine-id"
-      ];
-      users.root = {
-        home = "/root";
+    preservation = {
+      enable = true;
+      preserveAt."/persist" = {
         directories = [
-          ".ssh"
-          ".local/share/nix"
+          "/etc/nixos"
+          "/var/log"
+          "/var/lib/nixos"
+          "/var/lib/systemd/coredump"
+          "/var/lib/NetworkManager"
         ];
+        files = [
+          "/etc/machine-id"
+        ];
+        users.root = {
+          home = "/root";
+          directories = [
+            ".ssh"
+            ".local/share/nix"
+          ];
+        };
       };
     };
+
+    users.mutableUsers = false;
+    users.users.root.hashedPasswordFile = "/persist/passwords/root";
+
+    system.stateVersion = "26.05";
   };
-
-  users.mutableUsers = false;
-  users.users.root.hashedPasswordFile = "/persist/passwords/root";
-
-  system.stateVersion = "26.05";
 }

@@ -182,8 +182,8 @@ fi
 echo ""
 
 print_status "PROMPT" "Verify disko configuration"
-echo -e "${DIM}│${RESET} Disko config: ${CLR2}hosts/${HOST}/disko.nix${RESET}"
-if ! prompt_confirm "Have you verified that disko.nix is correct?"; then
+echo -e "${DIM}│${RESET} Disko config: ${CLR2}hosts/${HOST}/_disko.nix${RESET}"
+if ! prompt_confirm "Have you verified that _disko.nix is correct?"; then
     echo -e "\n${BOLD_RED}Aborting installation.${RESET}"
     rm -f /tmp/secret.key
     exit 0
@@ -191,8 +191,8 @@ fi
 echo ""
 
 print_status "PROMPT" "Verify hardware configuration"
-echo -e "${DIM}│${RESET} Hardware config: ${CLR2}hosts/${HOST}/hardware-configuration.nix${RESET}"
-if ! prompt_confirm "Does hardware-configuration.nix look correct (or will be generated correctly)?"; then
+echo -e "${DIM}│${RESET} Hardware config: ${CLR2}hosts/${HOST}/_hardware-configuration.nix${RESET}"
+if ! prompt_confirm "Does _hardware-configuration.nix look correct (or will be generated correctly)?"; then
     echo -e "\n${BOLD_RED}Aborting installation.${RESET}"
     rm -f /tmp/secret.key
     exit 0
@@ -214,7 +214,7 @@ nix --experimental-features "nix-command flakes" \
     --yes-wipe-all-disks \
     --arg device '"'"${DISK_ID}"'"' \
     --arg swapSize '"'"${SWAP_SIZE}"'"' \
-    "$SCRIPT_DIR/hosts/$HOST/disko.nix"
+    "$SCRIPT_DIR/hosts/$HOST/_disko.nix"
 echo ""
 
 print_status "INFO" "Setting up root password hash..."
@@ -225,8 +225,8 @@ echo ""
 
 print_status "INFO" "Generating hardware configurations..."
 nixos-generate-config --show-hardware-config --root /mnt \
-    > "$SCRIPT_DIR/hosts/$HOST/hardware-configuration.nix"
-git -C "$SCRIPT_DIR" add "hosts/$HOST/hardware-configuration.nix"
+    > "$SCRIPT_DIR/hosts/$HOST/_hardware-configuration.nix"
+git -C "$SCRIPT_DIR" add "hosts/$HOST/_hardware-configuration.nix"
 echo ""
 
 print_status "INFO" "Installing NixOS..."

@@ -1,12 +1,14 @@
-{ pkgs, ... }: {
-  programs.niri.enable = true;
-  environment.systemPackages = [ pkgs.xwayland ];
+{ ... }: {
+  flake.modules.nixos.feature_niri = { pkgs, ... }: {
+    programs.niri.enable = true;
+    environment.systemPackages = [ pkgs.xwayland ];
 
-  environment.etc."niri/config.kdl".text = ''
-    spawn-at-startup "ghostty"
-    binds {
-      Mod+Return { spawn "ghostty"; }
-      Mod+Q { close-window; }
-    }
-  '';
+    environment.etc."niri/config.kdl".text = ''
+      spawn-at-startup "ghostty"
+      binds {
+        Mod+Return { spawn "ghostty"; }
+        Mod+Q { close-window; }
+      }
+    '';
+  };
 }
