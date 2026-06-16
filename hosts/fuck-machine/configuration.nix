@@ -4,10 +4,10 @@
     inputs.preservation.nixosModules.default
     ./disko.nix
     ./hardware-configuration.nix
-    ../../features/base.nix
-    ../../features/desktop.nix
-    ../../features/niri.nix
-    ../../features/noctalia.nix
+    ../../modules/features/base.nix
+    ../../modules/features/desktop.nix
+    ../../modules/features/niri.nix
+    ../../modules/features/noctalia.nix
   ];
 
   # Bootloader
