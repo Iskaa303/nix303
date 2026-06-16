@@ -11,8 +11,14 @@
     ]);
 
     # Bootloader
-    boot.loader.systemd-boot.enable = true;
+    boot.loader.timeout = 2;
     boot.loader.efi.canTouchEfiVariables = true;
+    boot.loader.efi.efiSysMountPoint = "/boot";
+    boot.loader.grub = {
+      enable = true;
+      device = "nodev";
+      efiSupport = true;
+    };
     boot.initrd.systemd.enable = true;
 
     networking.hostName = "fuck-machine";
