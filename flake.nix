@@ -25,6 +25,7 @@
       imports = [
         (inputs.import-tree ./hosts)
         (inputs.import-tree ./modules)
+        inputs.flake-parts.flakeModules.modules
       ];
     };
 }
