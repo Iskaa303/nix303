@@ -1,5 +1,5 @@
-{ inputs, pkgs, ... }: {
-  flake.modules.nixos.feature_niri = {
+{ inputs, ... }: {
+  flake.modules.nixos.feature_niri = { pkgs, ... }: {
     imports = [ inputs.niri-flake.nixosModules.niri ];
     nixpkgs.overlays = [ inputs.niri-flake.overlays.niri ];
 

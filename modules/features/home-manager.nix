@@ -1,5 +1,5 @@
-{ lib, username, ... }: {
-  flake.modules.nixos.feature_home-manager = {
+{ ... }: {
+  flake.modules.nixos.feature_home-manager = { lib, username, ... }: {
     imports = [(lib.mkAliasOptionModule ["hm"] ["home-manager" "users" username])];
 
     hm = {
