@@ -70,28 +70,7 @@ prompt_confirm() {
 	done
 }
 
-greeting_banner() {
-	local accent1=(
-		" ▄     ${CLR2B}▀▀        "
-		" ████▄▀██▀██ ██▀ "
-		" ██ ██ ██  ███   "
-		"${CLR1}▄██ ▀█▄██▄██ ██▄▄"
-	)
-	local accent2=(
-		"                 ${CLR1B}▀▀${CLR2B}       ▄"
-		"▄███▄ ████▄▄███▀ ██ ▄██▀█ ███▄███▄"
-		"██ ██ ██   ██    ██ ▀███▄ ██ ██ ██"
-		"${CLR2}▀███▀▄█▀   ▀███▄▄███▄▄██▀▄██ ██ ▀█"
-	)
-
-	for i in {0..3}; do
-		echo -e "${CLR1B}${accent1[i]}${CLR2B}${accent2[i]}${RESET}"
-	done
-	echo ""
-}
-
 clear
-greeting_banner
 echo ""
 
 # Ensure root
