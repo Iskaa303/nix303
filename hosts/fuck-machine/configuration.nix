@@ -43,6 +43,8 @@
       };
     };
 
+    fileSystems."/persist".neededForBoot = true;
+
     users.mutableUsers = false;
     users.users.root.hashedPasswordFile = "/persist/passwords/root";
 
