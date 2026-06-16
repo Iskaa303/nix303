@@ -1,10 +1,13 @@
 { ... }:
 let
-  username = import ./username.nix;
+  vars = import ./_user-vars.nix;
 in {
-  users.users."${username}" = {
+  users.users."${vars.username}" = {
     isNormalUser = true;
     extraGroups = [ "wheel" "audio" "usb" "video" "networkmanager" ];
-    hashedPasswordFile = "/persist/passwords/${username}";
-  };
+  } // (if vars.hasPassword then {
+    hashedPasswordFile = "/persist/passwords/${vars.username}";
+  } else {
+    initialEmptyPassword = true;
+  });
 }

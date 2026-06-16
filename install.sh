@@ -193,23 +193,26 @@ print_status "PROMPT" "Create Normal User"
 prompt_input "Username: " USERNAME "$CLR1"
 echo ""
 
-print_status "PROMPT" "Set Password for ${USERNAME}"
+print_status "PROMPT" "Set Password for ${USERNAME} (Leave empty for no password)"
 while true; do
     read -rs -p "$(echo -e "${DIM}>${RESET} ${BOLD}Password:${RESET} ")" USER_PASS
     echo ""
     read -rs -p "$(echo -e "${DIM}>${RESET} ${BOLD}Confirm:${RESET} ")" USER_PASS_CONFIRM
     echo ""
-    if [ -z "$USER_PASS" ]; then
-        print_status "FAILED" "Password cannot be empty"
-        continue
-    fi
     if [[ "$USER_PASS" == "$USER_PASS_CONFIRM" ]]; then
         break
     fi
     print_status "FAILED" "Passwords do not match, try again"
 done
-echo -e "${DIM}Generating password hash...${RESET}"
-USER_HASH=$(mkpasswd -m sha-512 "$USER_PASS")
+if [ -n "$USER_PASS" ]; then
+    echo -e "${DIM}Generating password hash...${RESET}"
+    USER_HASH=$(mkpasswd -m sha-512 "$USER_PASS")
+    HAS_PASSWORD="true"
+else
+    USER_HASH=""
+    HAS_PASSWORD="false"
+    echo -e "${DIM}No password set for ${USERNAME}.${RESET}"
+fi
 unset USER_PASS USER_PASS_CONFIRM
 echo ""
 
@@ -269,13 +272,21 @@ mkdir -p /mnt/persist/passwords
 echo -n "$ROOT_HASH" > /mnt/persist/passwords/root
 chmod 600 /mnt/persist/passwords/root
 
-echo -n "$USER_HASH" > "/mnt/persist/passwords/$USERNAME"
-chmod 600 "/mnt/persist/passwords/$USERNAME"
+if [ "$HAS_PASSWORD" == "true" ]; then
+    echo -n "$USER_HASH" > "/mnt/persist/passwords/$USERNAME"
+    chmod 600 "/mnt/persist/passwords/$USERNAME"
+fi
 echo ""
 
 print_status "INFO" "Updating user configuration..."
-echo "\"$USERNAME\"" > "$SCRIPT_DIR/hosts/$HOST/username.nix"
-git -C "$SCRIPT_DIR" add "hosts/$HOST/username.nix"
+cat <<EOF > "$SCRIPT_DIR/hosts/$HOST/_user-vars.nix"
+{
+  username = "$USERNAME";
+  hasPassword = $HAS_PASSWORD;
+}
+EOF
+git -C "$SCRIPT_DIR" rm -f "hosts/$HOST/username.nix" 2>/dev/null || true
+git -C "$SCRIPT_DIR" add "hosts/$HOST/_user-vars.nix"
 echo ""
 
 print_status "INFO" "Generating hardware configurations..."
