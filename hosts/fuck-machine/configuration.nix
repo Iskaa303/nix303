@@ -1,9 +1,7 @@
 { config, ... }: {
   flake.modules.nixos.fuck-machine = { pkgs, inputs, ... }: {
     imports = [
-      inputs.disko.nixosModules.default
       inputs.preservation.nixosModules.default
-      ./_disko.nix
       ./_hardware-configuration.nix
     ] ++ (with config.flake.modules.nixos; [
       feature_base
