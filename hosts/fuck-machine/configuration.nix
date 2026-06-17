@@ -15,6 +15,7 @@ in {
       feature_niri
       feature_noctalia
       feature_home-manager
+      feature_antigravity
     ]);
 
     boot.initrd.systemd.enable = true;
