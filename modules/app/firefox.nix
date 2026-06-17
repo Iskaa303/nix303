@@ -22,6 +22,7 @@
               "https://www.google.com"
               "https://youtube.com"
               "https://mail.google.com"
+              "https://github.com"
             ];
             Behavior = "reject-tracker";
           };

@@ -3,11 +3,13 @@
     hm = {
       programs.git = {
         enable = true;
-        userName = userVars.gitName or "";
-        userEmail = userVars.gitEmail or "";
-        extraConfig = {
+        settings = {
+          user = {
+            name = userVars.gitName or "";
+            email = userVars.gitEmail or "";
+          };
           safe = {
-            directory = [ "/persist/etc/nixos" "/etc/nixos" ];
+            directory = [ "/persist/etc/nixos" ];
           };
         };
       };

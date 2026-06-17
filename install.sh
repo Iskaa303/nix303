@@ -193,6 +193,11 @@ print_status "PROMPT" "Create Normal User"
 prompt_input "Username: " USERNAME "$CLR1"
 echo ""
 
+print_status "PROMPT" "Configure Git"
+prompt_input "Git Full Name: " GIT_NAME "$CLR1"
+prompt_input "Git Email: " GIT_EMAIL "$CLR1"
+echo ""
+
 print_status "PROMPT" "Set Password for ${USERNAME}"
 while true; do
     read -rs -p "$(echo -e "${DIM}>${RESET} ${BOLD}Password:${RESET} ")" USER_PASS
@@ -277,6 +282,8 @@ print_status "INFO" "Updating user configuration..."
 cat <<EOF > "$SCRIPT_DIR/hosts/$HOST/_user-vars.nix"
 {
   username = "$USERNAME";
+  gitName = "$GIT_NAME";
+  gitEmail = "$GIT_EMAIL";
 }
 EOF
 git -C "$SCRIPT_DIR" rm -f "hosts/$HOST/username.nix" 2>/dev/null || true

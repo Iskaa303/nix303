@@ -12,6 +12,7 @@ in {
       desktop_login-manager_ly
       core_base
       core_desktop
+      core_audio
       desktop_niri
       desktop_noctalia
       core_home-manager
@@ -21,8 +22,10 @@ in {
       cli_helix
       cli_nushell
       cli_tools
+      cli_git
       theme_stylix
       app_firefox
+      app_nixcord
     ]);
 
     boot.initrd.systemd.enable = true;
@@ -76,9 +79,9 @@ in {
             ".cache/noctalia"
             { directory = ".ssh"; mode = "0700"; }
             ".config/git"
+            ".config/legcord"
           ];
           files = [
-            ".gitconfig"
           ];
         };
       };

@@ -1,7 +1,7 @@
 { inputs, ... }: {
   flake.modules.nixos.app_nixcord = {
     hm = {
-      imports = [ inputs.nixcord.homeManagerModules.nixcord ];
+      imports = [ inputs.nixcord.homeModules.nixcord ];
       programs.nixcord = {
         enable = true;
         legcord = {
