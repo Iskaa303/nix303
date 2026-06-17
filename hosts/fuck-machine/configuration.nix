@@ -71,6 +71,14 @@ in {
             ".local/share/yazi"
             ".local/state/yazi"
             ".local/share/keyrings"
+            ".config/noctalia"
+            ".local/state/noctalia"
+            ".cache/noctalia"
+            { directory = ".ssh"; mode = "0700"; }
+            ".config/git"
+          ];
+          files = [
+            ".gitconfig"
           ];
         };
       };

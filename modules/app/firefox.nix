@@ -1,5 +1,7 @@
 { inputs, ... }: {
-  flake.modules.nixos.app_firefox = { username, lib, ... }: {
+  flake.modules.nixos.app_firefox = { username, lib, pkgs, ... }: {
+    nixpkgs.overlays = [ inputs.nur.overlays.default ];
+
     hm = {
       imports = [ inputs.arkenfox.hmModules.arkenfox ];
 
@@ -29,6 +31,10 @@
           id = 0;
           name = username;
           isDefault = true;
+
+          extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
+            ublock-origin
+          ];
 
           arkenfox = {
             enable = true;

@@ -17,7 +17,7 @@
         open = {
           prepend_rules = [
             { mime = "text/*"; use = "edit"; }
-            { name = "*"; use = "edit"; }
+            { url = "*"; use = "edit"; }
           ];
         };
       };

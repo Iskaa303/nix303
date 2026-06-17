@@ -4,7 +4,14 @@
 
     hm = {
       imports = [inputs.noctalia.homeModules.default];
-      programs.noctalia.enable = true;
+      programs.noctalia = {
+        enable = true;
+        settings = {
+          widget.clock = {
+            format = "{:%H:%M:%S}";
+          };
+        };
+      };
     };
   };
 }
