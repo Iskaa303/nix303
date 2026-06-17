@@ -9,6 +9,17 @@
           sort_by = "natural";
           sort_dir_first = true;
         };
+        opener = {
+          edit = [
+            { run = ''hx "$@"''; block = true; desc = "Helix"; }
+          ];
+        };
+        open = {
+          prepend_rules = [
+            { mime = "text/*"; use = "edit"; }
+            { name = "*"; use = "edit"; }
+          ];
+        };
       };
     };
   };

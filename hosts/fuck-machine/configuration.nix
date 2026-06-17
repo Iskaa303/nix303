@@ -20,6 +20,7 @@ in {
       cli_yazi
       cli_helix
       cli_nushell
+      cli_tools
       theme_stylix
       app_firefox
     ]);
@@ -29,7 +30,13 @@ in {
     networking.hostName = "fuck-machine";
     networking.networkmanager.enable = true;
 
-    time.timeZone = "EST"; 
+    time.timeZone = "America/New_York"; 
+
+    hardware.bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+    };
+    services.blueman.enable = true; 
 
     preservation = {
       enable = true;
@@ -41,6 +48,7 @@ in {
           "/var/lib/systemd/coredump"
           "/var/lib/NetworkManager"
           { directory = "/etc/NetworkManager/system-connections"; mode = "0700"; }
+          { directory = "/var/lib/bluetooth"; mode = "0700"; }
         ];
         files = [
           "/etc/machine-id"
@@ -55,14 +63,24 @@ in {
         users."${vars.username}" = {
           home = "/home/${vars.username}";
           directories = [
+            ".mozilla"
             ".config/mozilla"
             ".config/gh"
+            ".config/nushell"
+            ".local/share/zoxide"
+            ".local/share/yazi"
+            ".local/state/yazi"
+            ".local/share/keyrings"
           ];
         };
       };
     };
 
     fileSystems."/persist".neededForBoot = true;
+
+    swapDevices = [
+      { device = "/swap/swapfile"; }
+    ];
 
     users.mutableUsers = false;
     users.users.root.hashedPasswordFile = "/persist/passwords/root";

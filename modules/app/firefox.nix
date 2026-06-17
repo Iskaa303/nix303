@@ -51,6 +51,11 @@
             # Prevent clearing cookies & storage on shutdown globally so exception list works
             "privacy.clearOnShutdown.cookies" = lib.mkForce false;
             "privacy.clearOnShutdown.offlineApps" = lib.mkForce false;
+
+            # Theme matching and styling overrides
+            "toolkit.legacyUserProfileCustomizations.stylesheets" = lib.mkForce true;
+            "privacy.resistFingerprinting" = lib.mkForce false;
+            "privacy.resistFingerprinting.letterboxing" = lib.mkForce false;
           };
         };
       };

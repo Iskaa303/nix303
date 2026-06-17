@@ -19,6 +19,11 @@
             }
           }
         }
+
+        alias ll = eza -l
+        alias la = eza -a
+        alias lla = eza -la
+        alias lt = eza --tree
       '';
     };
 
