@@ -1,7 +1,6 @@
 { ... }: {
-  flake.modules.nixos.feature_desktop = { pkgs, ... }: {
+  flake.modules.nixos.core_desktop = { pkgs, ... }: {
     environment.systemPackages = with pkgs; [
-      firefox
       ghostty
       foot
     ];

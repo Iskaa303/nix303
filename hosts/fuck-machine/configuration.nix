@@ -8,14 +8,20 @@ in {
       ./_hardware-configuration.nix
       ./_user.nix
     ] ++ (with config.flake.modules.nixos; [
-      bootloader_grub
-      login-manager_ly
-      feature_base
-      feature_desktop
-      feature_niri
-      feature_noctalia
-      feature_home-manager
-      feature_antigravity
+      core_bootloader_grub
+      desktop_login-manager_ly
+      core_base
+      core_desktop
+      desktop_niri
+      desktop_noctalia
+      core_home-manager
+      app_antigravity
+      cli_btop
+      cli_yazi
+      cli_helix
+      cli_nushell
+      theme_stylix
+      app_firefox
     ]);
 
     boot.initrd.systemd.enable = true;

@@ -1,5 +1,5 @@
 { inputs, ... }: {
-  flake.modules.nixos.feature_antigravity = {
+  flake.modules.nixos.app_antigravity = {
    # nixpkgs.config.allowUnfreePredicate = pkg: 
    #   builtins.elem (inputs.nixpkgs.lib.getName pkg) [
    #     "google-antigravity"

@@ -1,5 +1,5 @@
 { ... }: {
-  flake.modules.nixos.login-manager_ly = {
+  flake.modules.nixos.desktop_login-manager_ly = {
     services.displayManager.ly = {
       enable = true;
       settings = {

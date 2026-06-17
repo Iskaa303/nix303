@@ -1,5 +1,5 @@
 { ... }: {
-  flake.modules.nixos.feature_base = { pkgs, ... }: {
+  flake.modules.nixos.core_base = { pkgs, ... }: {
     environment.systemPackages = with pkgs; [
       curl
       bash

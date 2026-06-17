@@ -1,5 +1,5 @@
 { inputs, ... }: {
-  flake.modules.nixos.feature_noctalia = {
+  flake.modules.nixos.desktop_noctalia = {
     services.upower.enable = true;
 
     hm = {

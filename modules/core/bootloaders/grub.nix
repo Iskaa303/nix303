@@ -1,5 +1,5 @@
 { ... }: {
-  flake.modules.nixos.bootloader_grub = {
+  flake.modules.nixos.core_bootloader_grub = {
     imports = [ ./_shared.nix ];
 
     boot.loader.grub = {
