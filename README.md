@@ -6,3 +6,7 @@ cd nix303
 chmod +x ./install.sh
 sudo ./install.sh
 ```
+
+# Warning
+This isn't a complete system setup yet!
+Expect breaking changes.
