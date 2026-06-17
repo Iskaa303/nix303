@@ -1,10 +1,11 @@
 {
   flake.modules.nixos.desktop_niri = {
     hm.programs.niri.settings.binds = {
-      # Basic stuff
+      # Apps Manipulation
       "Mod+Return".action.spawn = "ghostty";
       "Mod+T".action.spawn = "foot";
       "Mod+B".action.spawn = "firefox";
+      "Mod+D".action.spawn = [ "noctalia" "msg" "panel-toggle" "launcher" ];
       "Mod+Q".action.close-window = {};
 
       # Navigation
