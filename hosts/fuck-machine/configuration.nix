@@ -1,4 +1,7 @@
-{ config, ... }: {
+{ config, ... }: 
+let
+  vars = import ./_user-vars.nix;
+in {
   flake.modules.nixos.fuck-machine = { pkgs, inputs, ... }: {
     imports = [
       inputs.preservation.nixosModules.default
@@ -19,7 +22,7 @@
     networking.hostName = "fuck-machine";
     networking.networkmanager.enable = true;
 
-    time.timeZone = "UTC"; 
+    time.timeZone = "EST"; 
 
     preservation = {
       enable = true;
@@ -30,6 +33,7 @@
           "/var/lib/nixos"
           "/var/lib/systemd/coredump"
           "/var/lib/NetworkManager"
+          { directory = "/etc/NetworkManager/system-connections"; mode = "0700"; }
         ];
         files = [
           "/etc/machine-id"
@@ -39,6 +43,13 @@
           directories = [
             ".ssh"
             ".local/share/nix"
+          ];
+        };
+        users."${vars.username}" = {
+          home = "/home/${vars.username}";
+          directories = [
+            ".config/mozilla"
+            ".config/gh"
           ];
         };
       };

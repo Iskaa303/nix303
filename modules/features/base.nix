@@ -6,6 +6,8 @@
       git
       nano
       neovim
+      gh
+      fastfetch
     ];
   };
 }
