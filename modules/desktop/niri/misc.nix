@@ -9,7 +9,6 @@
       spawn-at-startup = [
         { command = ["xwayland-satellite"]; }
         { command = ["noctalia"]; }
-        { command = ["ghostty"]; }
       ];
     };
   };
