@@ -18,11 +18,11 @@
           Cookies = {
             Allow = [
               "https://google.com"
-              "https://accounts.google.com"
-              "https://www.google.com"
+              "[. ]google.com"
               "https://youtube.com"
-              "https://mail.google.com"
+              "[. ]youtube.com"
               "https://github.com"
+              "[. ]github.com"
             ];
             Behavior = "reject-tracker";
           };
