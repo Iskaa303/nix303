@@ -3,7 +3,7 @@
     hm = {
       home.packages = [
         (let
-          freesm-raw = inputs.freesm-launcher.packages.${pkgs.system}.default;
+          freesm-raw = inputs.freesm-launcher.packages.${pkgs.stdenv.hostPlatform.system}.default;
           
           liquidbounceDeps = with pkgs; [
             stdenv.cc.cc.lib

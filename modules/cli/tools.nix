@@ -11,6 +11,7 @@
 
     hm.home.packages = [
       pkgs.ouch
+      pkgs.ripgrep
     ];
   };
 }

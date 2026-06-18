@@ -4,9 +4,9 @@ let
 in {
   flake.nixosConfigurations = {
     fuck-machine = inputs.nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
       specialArgs = { inherit inputs; username = vars.username; userVars = vars; };
       modules = [
+        { nixpkgs.hostPlatform = "x86_64-linux"; }
         config.flake.modules.nixos.fuck-machine
         inputs.home-manager.nixosModules.home-manager
         {
