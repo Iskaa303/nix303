@@ -19,6 +19,8 @@
             }
           }
         }
+
+        alias ff = fastfetch
       '';
     };
 
