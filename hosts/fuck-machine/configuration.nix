@@ -27,6 +27,7 @@ in {
       app_nixcord
       app_antigravity
       app_freesm
+      app_onlyoffice
     ]);
 
     boot.initrd.systemd.enable = true;
@@ -67,6 +68,7 @@ in {
         users."${vars.username}" = {
           home = "/home/${vars.username}";
           directories = [
+            "Documents"
             ".mozilla"
             ".config/mozilla"
             ".config/gh"
@@ -86,6 +88,8 @@ in {
             ".config/freesmlauncher"
             ".local/share/FreesmLauncher"
             ".local/share/freesmlauncher"
+            ".config/onlyoffice"
+            ".local/share/onlyoffice"
           ];
           files = [
           ];

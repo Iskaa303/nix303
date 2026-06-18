@@ -12,6 +12,7 @@
     hm.home.packages = [
       pkgs.ouch
       pkgs.ripgrep
+      pkgs.tdf
     ];
   };
 }

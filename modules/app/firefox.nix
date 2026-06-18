@@ -35,6 +35,8 @@
               "[. ]band.us"
               "https://collegeboard.org"
               "[. ]collegeboard.org"
+              "https://reddit.com"
+              "[. ]reddit.com"
             ];
             Behavior = "reject-tracker";
           };
