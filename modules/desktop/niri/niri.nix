@@ -10,16 +10,16 @@
 
     environment.sessionVariables = {
       NIXOS_OZONE_WL = "1";
+      ELECTRON_OZONE_PLATFORM_HINT = "auto";
     };
 
     xdg.portal = {
       enable = true;
       extraPortals = with pkgs; [
-        xdg-desktop-portal-wlr
         xdg-desktop-portal-gtk
         xdg-desktop-portal-gnome
       ];
-      config.common.default = "*";
+      config.common.default = [ "gnome" "gtk" ];
     };
 
     hm.home.packages = with pkgs; [ xwayland-satellite ];

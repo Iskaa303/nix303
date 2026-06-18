@@ -25,6 +25,7 @@ in {
       theme_stylix
       app_firefox
       app_nixcord
+      app_antigravity
     ]);
 
     boot.initrd.systemd.enable = true;
@@ -78,7 +79,7 @@ in {
             ".cache/noctalia"
             { directory = ".ssh"; mode = "0700"; }
             ".config/git"
-            ".config/legcord"
+            ".config/vesktop"
           ];
           files = [
           ];
