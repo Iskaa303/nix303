@@ -8,5 +8,9 @@
       enable = true;
       enableNushellIntegration = true;
     };
+
+    hm.home.packages = [
+      pkgs.ouch
+    ];
   };
 }

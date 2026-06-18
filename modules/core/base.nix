@@ -9,5 +9,10 @@
       gh
       fastfetch
     ];
+
+    programs.nix-ld = {
+      enable = true;
+      libraries = [];
+    };
   };
 }
