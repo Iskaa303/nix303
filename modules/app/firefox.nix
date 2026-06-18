@@ -33,6 +33,8 @@
               "[. ]canva.com"
               "https://band.us"
               "[. ]band.us"
+              "https://collegeboard.org"
+              "[. ]collegeboard.org"
             ];
             Behavior = "reject-tracker";
           };
