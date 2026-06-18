@@ -29,6 +29,10 @@
               "[. ]youtube.com"
               "https://github.com"
               "[. ]github.com"
+              "https://canva.com"
+              "[. ]canva.com"
+              "https://band.us"
+              "[. ]band.us"
             ];
             Behavior = "reject-tracker";
           };
