@@ -4,7 +4,7 @@
 
     stylix = {
       enable = true;
-      image = ./nord-wallpaper.png;
+      image = ../../assets/wallpaper.png;
       base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
       polarity = "dark";
 

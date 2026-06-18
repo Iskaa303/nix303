@@ -16,7 +16,6 @@ in {
       desktop_niri
       desktop_noctalia
       core_home-manager
-      app_antigravity
       cli_btop
       cli_yazi
       cli_helix
