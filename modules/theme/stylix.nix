@@ -8,6 +8,11 @@
       base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
       polarity = "dark";
 
+      targets.qt = {
+        enable = true;
+        platform = "qtct";
+      };
+
       cursor = {
         package = pkgs.bibata-cursors;
         name = "Bibata-Modern-Classic";

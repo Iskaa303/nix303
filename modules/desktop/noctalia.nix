@@ -8,7 +8,23 @@
         enable = true;
         settings = {
           widget.clock = {
-            format = "{:%H:%M:%S}";
+            format = "{:%Y-%m-%d %H:%M:%S}";
+          };
+          bar = {
+            end = [
+              "media"
+              "tray"
+              "notifications"
+              "clipboard"
+              "network"
+              "bluetooth"
+              "keyboard_layout"
+              "volume"
+              "brightness"
+              "battery"
+              "control-center"
+              "session"
+            ];
           };
           theme = {
             mode = "dark";

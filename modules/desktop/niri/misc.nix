@@ -1,6 +1,15 @@
 {
   flake.modules.nixos.desktop_niri = {
     hm.programs.niri.settings = {
+      input = {
+        keyboard = {
+          xkb = {
+            layout = "us,ru";
+            options = "grp:alt_shift_toggle";
+          };
+        };
+      };
+
       environment = {
         NIXOS_OZONE_WL = "1";
         QT_QPA_PLATFORM = "wayland";

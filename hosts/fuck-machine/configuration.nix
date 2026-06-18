@@ -26,6 +26,7 @@ in {
       app_firefox
       app_nixcord
       app_antigravity
+      app_freesm
     ]);
 
     boot.initrd.systemd.enable = true;
@@ -81,6 +82,10 @@ in {
             ".config/git"
             ".config/vesktop"
             ".config/Vencord"
+            ".config/FreesmLauncher"
+            ".config/freesmlauncher"
+            ".local/share/FreesmLauncher"
+            ".local/share/freesmlauncher"
           ];
           files = [
           ];
