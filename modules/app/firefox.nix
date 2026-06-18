@@ -1,12 +1,18 @@
 { inputs, ... }: {
-  flake.modules.nixos.app_firefox = { username, lib, pkgs, ... }: {
+  flake.modules.nixos.app_firefox = { userVars, lib, pkgs, ... }: {
     nixpkgs.overlays = [ inputs.nur.overlays.default ];
 
     hm = {
-      imports = [ inputs.arkenfox.hmModules.arkenfox ];
+      imports = [
+        inputs.arkenfox.hmModules.arkenfox
+      ];
 
-      stylix.targets.firefox.profileNames = [ username ];
-
+      stylix.targets.firefox = {
+        profileNames = [ userVars.username ];
+        colorTheme.enable = true;
+        colors.enable = true;
+      };
+      
       programs.firefox = {
         enable = true;
         arkenfox = {
@@ -28,13 +34,16 @@
           };
         };
 
-        profiles."${username}" = {
+        profiles."${userVars.username}" = {
           id = 0;
-          name = username;
+          name = userVars.username;
           isDefault = true;
 
+          extensions.force = true;
+          
           extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
             ublock-origin
+            sponsorblock
           ];
 
           arkenfox = {
@@ -61,6 +70,7 @@
 
             # Theme matching and styling overrides
             "toolkit.legacyUserProfileCustomizations.stylesheets" = lib.mkForce true;
+            "browser.display.use_document_colors" = lib.mkForce true;
             "privacy.resistFingerprinting" = lib.mkForce false;
             "privacy.resistFingerprinting.letterboxing" = lib.mkForce false;
           };
