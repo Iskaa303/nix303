@@ -80,6 +80,7 @@ in {
             { directory = ".ssh"; mode = "0700"; }
             ".config/git"
             ".config/vesktop"
+            ".config/Vencord"
           ];
           files = [
           ];

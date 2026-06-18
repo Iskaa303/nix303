@@ -19,7 +19,14 @@
         xdg-desktop-portal-gtk
         xdg-desktop-portal-gnome
       ];
-      config.common.default = [ "gnome" "gtk" ];
+      config = {
+        common = {
+          default = [ "gnome" "gtk" ];
+          "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
+          "org.freedesktop.impl.portal.FileDialog" = [ "gtk" ];
+          "org.freedesktop.impl.portal.OpenURI" = [ "gtk" ];
+        };
+      };
     };
 
     hm.home.packages = with pkgs; [ xwayland-satellite ];
