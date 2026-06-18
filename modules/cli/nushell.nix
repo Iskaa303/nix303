@@ -20,7 +20,7 @@
           }
         }
 
-        alias ff = fastfetch
+        alias ff = fastfetch --logo-type kitty --logo /persist/etc/nixos/assets/logo.png
       '';
     };
 

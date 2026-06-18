@@ -1,6 +1,8 @@
 { ... }: {
   flake.modules.nixos.cli_git = { userVars, ... }: {
     hm = {
+      stylix.targets.lazygit.enable = true;
+      
       programs.git = {
         enable = true;
         settings = {
@@ -19,6 +21,10 @@
         gitCredentialHelper = {
           enable = true;
         };
+      };
+
+      programs.lazygit = {
+        enable = true;
       };
     };
   };
