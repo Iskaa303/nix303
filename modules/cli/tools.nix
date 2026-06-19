@@ -13,6 +13,8 @@
       pkgs.ouch
       pkgs.ripgrep
       pkgs.tdf
+      pkgs.fzf
+      pkgs.fd
     ];
   };
 }
