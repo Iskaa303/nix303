@@ -4,10 +4,10 @@
       enable = true;
       settings = {
         logo = {
-          type = "kitty-icat";
+          type = "kitty-direct";
           source = "${../../assets/logo.png}";
-          width = 28;
-          height = 12;
+          width = 40;
+          height = 17;
           padding = {
             right = 4;
           };
@@ -75,6 +75,7 @@
           }
           "break"
           "colors"
+          "break"
         ];
       };
     };
