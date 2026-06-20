@@ -7,7 +7,6 @@
       bash
       nano
       gh
-      fastfetch
     ];
 
     programs.nix-ld = {

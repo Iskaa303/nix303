@@ -22,12 +22,17 @@ in {
       cli_nushell
       cli_tools
       cli_git
+      cli_tmux
+      cli_atuin
+      cli_fastfetch
       theme_stylix
       app_firefox
+      app_ghostty
       app_nixcord
       app_antigravity
       app_freesm
       app_onlyoffice
+      app_whatsapp
     ]);
 
     boot.initrd.systemd.enable = true;
@@ -90,6 +95,8 @@ in {
             ".local/share/freesmlauncher"
             ".config/onlyoffice"
             ".local/share/onlyoffice"
+            ".local/share/atuin"
+            ".local/share/tmux"
           ];
           files = [
           ];
