@@ -74,6 +74,7 @@ in {
           home = "/home/${vars.username}";
           directories = [
             "Documents"
+            "Projects"
             ".mozilla"
             ".config/mozilla"
             ".config/gh"
@@ -92,6 +93,8 @@ in {
             ".local/share/onlyoffice"
             ".local/share/atuin"
             ".local/share/karere"
+            ".config/karere"
+            ".pki"
           ];
           files = [
           ];

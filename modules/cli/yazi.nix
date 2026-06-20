@@ -24,7 +24,7 @@
         mgr = {
           prepend_keymap = [
             {
-              on = [ "<C-q>" ];
+              on = [ "<A-d>" ];
               run = "plugin drag";
               desc = "Drag files";
             }

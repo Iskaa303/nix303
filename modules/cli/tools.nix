@@ -13,6 +13,7 @@
       pkgs.tdf
       pkgs.fzf
       pkgs.fd
+      pkgs.devenv
     ];
   };
 }

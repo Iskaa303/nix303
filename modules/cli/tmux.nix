@@ -10,7 +10,7 @@
         baseIndex = 1;
         keyMode = "vi";
         customPaneNavigationAndResize = true;
-        escapeTime = 0;
+        escapeTime = 10;
         historyLimit = 10000;
         terminal = "tmux-256color";
 
