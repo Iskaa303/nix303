@@ -33,6 +33,7 @@ in {
       app_freesm
       app_onlyoffice
       app_whatsapp
+      app_mpv
     ]);
 
     boot.initrd.systemd.enable = true;
@@ -95,6 +96,7 @@ in {
             ".local/share/karere"
             ".config/karere"
             ".pki"
+            ".local/share/Trash"
           ];
           files = [
           ];

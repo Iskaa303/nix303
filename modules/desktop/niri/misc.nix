@@ -35,6 +35,15 @@
           ]; 
         }
       ];
+
+      window-rules = [
+        {
+          matches = [
+            { app-id = "^mpv$"; }
+          ];
+          default-column-width = { proportion = 0.5; };
+        }
+      ];
     };
   };
 }
