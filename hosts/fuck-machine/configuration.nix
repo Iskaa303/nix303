@@ -79,8 +79,6 @@ in {
             ".config/gh"
             ".config/nushell"
             ".local/share/zoxide"
-            ".local/share/yazi"
-            ".local/state/yazi"
             ".local/share/keyrings"
             ".config/noctalia"
             ".local/state/noctalia"
@@ -89,14 +87,11 @@ in {
             ".config/git"
             ".config/vesktop"
             ".config/Vencord"
-            ".config/FreesmLauncher"
-            ".config/freesmlauncher"
             ".local/share/FreesmLauncher"
-            ".local/share/freesmlauncher"
             ".config/onlyoffice"
             ".local/share/onlyoffice"
             ".local/share/atuin"
-            ".local/share/tmux"
+            ".local/share/karere"
           ];
           files = [
           ];
