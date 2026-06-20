@@ -60,22 +60,22 @@
           name = "stylix";
           widgets = "Fusion";
           qssFilePath = "themeStyle.css";
-          colors = {
-            AlternateBase = "#${config.lib.stylix.colors.base01}";
-            Base = "#${config.lib.stylix.colors.base00}";
-            BrightText = "#${config.lib.stylix.colors.base09}";
-            Button = "#${config.lib.stylix.colors.base01}";
-            ButtonText = "#${config.lib.stylix.colors.base05}";
-            Highlight = "#${config.lib.stylix.colors.base0D}";
-            HighlightedText = "#${config.lib.stylix.colors.base00}";
-            Link = "#${config.lib.stylix.colors.base0D}";
-            Text = "#${config.lib.stylix.colors.base05}";
-            ToolTipBase = "#${config.lib.stylix.colors.base01}";
-            ToolTipText = "#${config.lib.stylix.colors.base05}";
-            Window = "#${config.lib.stylix.colors.base00}";
-            WindowText = "#${config.lib.stylix.colors.base05}";
+          colors = with config.lib.stylix.colors.withHashtag; {
+            AlternateBase = base01;
+            Base = base00;
+            BrightText = base09;
+            Button = base01;
+            ButtonText = base05;
+            Highlight = base0D;
+            HighlightedText = base00;
+            Link = base0D;
+            Text = base05;
+            ToolTipBase = base01;
+            ToolTipText = base05;
+            Window = base00;
+            WindowText = base05;
             fadeAmount = 0.5;
-            fadeColor = "#${config.lib.stylix.colors.base00}";
+            fadeColor = base00;
           };
         };
         ".local/share/FreesmLauncher/themes/stylix/themeStyle.css".text = "";

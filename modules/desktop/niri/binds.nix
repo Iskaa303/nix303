@@ -53,6 +53,10 @@
       "Mod+Shift+7".action.move-window-to-workspace = 7;
       "Mod+Shift+8".action.move-window-to-workspace = 8;
       "Mod+Shift+9".action.move-window-to-workspace = 9;
+
+      # Screenshot bindings
+      "Print".action.spawn = [ "flameshot" "full" "--clipboard" ];
+      "Ctrl+Print".action.spawn = [ "flameshot" "gui" ];
     };
   };
 }

@@ -35,7 +35,7 @@
           }
         ];
 
-        extraConfig = ''
+        extraConfig = with config.lib.stylix.colors.withHashtag; ''
           # Split panes using | and - (and open in current directory)
           bind | split-window -h -c "#{pane_current_path}"
           bind - split-window -v -c "#{pane_current_path}"
@@ -72,28 +72,28 @@
           # --- Premium Floating-Pill Status Line ---
           set -g status-position bottom
           set -g status-justify left
-          set -g status-style "bg=default,fg=#${config.lib.stylix.colors.base05}"
+          set -g status-style "bg=default,fg=${base05}"
 
           # Left status: Session name in a floating pill
           set -g status-left-length 50
-          set -g status-left "#[fg=#${config.lib.stylix.colors.base0D},bg=default]#[fg=#${config.lib.stylix.colors.base00},bg=#${config.lib.stylix.colors.base0D},bold]󰄀 #S#[fg=#${config.lib.stylix.colors.base0D},bg=default,nobold] "
+          set -g status-left "#[fg=${base0D},bg=default]#[fg=${base00},bg=${base0D},bold]󰄀 #S#[fg=${base0D},bg=default,nobold] "
 
           # Right status: Path, Date/Time, and Host in beautiful floating pills
           set -g status-right-length 150
-          set -g status-right "#[fg=#${config.lib.stylix.colors.base01},bg=default]#[fg=#${config.lib.stylix.colors.base05},bg=#${config.lib.stylix.colors.base01}]󰉋 #{=50:pane_current_path}#[fg=#${config.lib.stylix.colors.base01},bg=default] #[fg=#${config.lib.stylix.colors.base03},bg=default]#[fg=#${config.lib.stylix.colors.base05},bg=#${config.lib.stylix.colors.base03}]󰃭 %Y-%m-%d #[fg=#${config.lib.stylix.colors.base0C},bg=#${config.lib.stylix.colors.base03}]#[fg=#${config.lib.stylix.colors.base00},bg=#${config.lib.stylix.colors.base0C},bold]󰍹 #h#[fg=#${config.lib.stylix.colors.base0C},bg=default,nobold]"
+          set -g status-right "#[fg=${base01},bg=default]#[fg=${base05},bg=${base01}]󰉋 #{=50:pane_current_path}#[fg=${base01},bg=default] #[fg=${base03},bg=default]#[fg=${base05},bg=${base03}]󰃭 %Y-%m-%d #[fg=${base0C},bg=${base03}]#[fg=${base00},bg=${base0C},bold]󰍹 #h#[fg=${base0C},bg=default,nobold]"
 
           # Window status formatting (tabs styled as floating pills)
           set -g window-status-separator " "
-          set -g window-status-format "#[fg=#${config.lib.stylix.colors.base03},bg=default]#[fg=#${config.lib.stylix.colors.base04},bg=#${config.lib.stylix.colors.base03}]#I: #W#[fg=#${config.lib.stylix.colors.base03},bg=default]"
-          set -g window-status-current-format "#[fg=#${config.lib.stylix.colors.base0D},bg=default]#[fg=#${config.lib.stylix.colors.base00},bg=#${config.lib.stylix.colors.base0D},bold]#I: #W#[fg=#${config.lib.stylix.colors.base0D},bg=default,nobold]"
+          set -g window-status-format "#[fg=${base03},bg=default]#[fg=${base04},bg=${base03}]#I: #W#[fg=${base03},bg=default]"
+          set -g window-status-current-format "#[fg=${base0D},bg=default]#[fg=${base00},bg=${base0D},bold]#I: #W#[fg=${base0D},bg=default,nobold]"
 
           # Pane borders
-          set -g pane-border-style "fg=#${config.lib.stylix.colors.base01}"
-          set -g pane-active-border-style "fg=#${config.lib.stylix.colors.base0D}"
+          set -g pane-border-style "fg=${base01}"
+          set -g pane-active-border-style "fg=${base0D}"
 
           # Style the command prompt and popups
-          set -g message-style "bg=#${config.lib.stylix.colors.base01},fg=#${config.lib.stylix.colors.base05}"
-          set -g message-command-style "bg=#${config.lib.stylix.colors.base01},fg=#${config.lib.stylix.colors.base05}"
+          set -g message-style "bg=${base01},fg=${base05}"
+          set -g message-command-style "bg=${base01},fg=${base05}"
         '';
       };
     };

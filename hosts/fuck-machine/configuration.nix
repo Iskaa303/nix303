@@ -32,8 +32,9 @@ in {
       app_antigravity
       app_freesm
       app_onlyoffice
-      app_whatsapp
+      app_karere
       app_mpv
+      app_flameshot
     ]);
 
     boot.initrd.systemd.enable = true;
