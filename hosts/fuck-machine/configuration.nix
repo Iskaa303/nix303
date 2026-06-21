@@ -22,7 +22,6 @@ in {
       cli_nushell
       cli_tools
       cli_git
-      cli_tmux
       cli_atuin
       cli_fastfetch
       theme_stylix
@@ -32,7 +31,6 @@ in {
       app_antigravity
       app_freesm
       app_onlyoffice
-      app_karere
       app_mpv
       app_flameshot
     ]);
@@ -108,8 +106,17 @@ in {
     fileSystems."/persist".neededForBoot = true;
 
     swapDevices = [
-      { device = "/swap/swapfile"; }
+      {
+        device = "/swap/swapfile";
+        priority = 1;
+      }
     ];
+
+    zramSwap = {
+      enable = true;
+      memoryPercent = 50;
+      priority = 100;
+    };
 
     users.mutableUsers = false;
     users.users.root.hashedPasswordFile = "/persist/passwords/root";

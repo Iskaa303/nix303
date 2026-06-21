@@ -73,6 +73,22 @@
             type = "memory";
             key = "󰍛 Memory";
           }
+          {
+            type = "swap";
+            key = "󰓡 Swap";
+          }
+          {
+            type = "disk";
+            key = "󰋊 Disk (/)";
+            folders = "/";
+            hideFolders = [ ];
+          }
+          {
+            type = "disk";
+            key = "󰋊 SSD (/nix)";
+            folders = "/nix";
+            hideFolders = [ ];
+          }
           "break"
           "colors"
           "break"

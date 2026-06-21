@@ -1,5 +1,5 @@
 { inputs, ... }: {
-  flake.modules.nixos.app_firefox = { userVars, lib, pkgs, ... }: {
+  flake.modules.nixos.app_firefox = { config, userVars, lib, pkgs, ... }: {
     nixpkgs.overlays = [ inputs.nur.overlays.default ];
 
     hm = {
@@ -37,6 +37,8 @@
               "[. ]collegeboard.org"
               "https://reddit.com"
               "[. ]reddit.com"
+              "https://whatsapp.com"
+              "[. ]whatsapp.com"
             ];
             Behavior = "reject-tracker";
           };
@@ -47,6 +49,27 @@
           name = userVars.username;
           isDefault = true;
 
+          bookmarks = [
+            {
+              name = "Bookmarks Toolbar";
+              toolbar = true;
+              bookmarks = [
+                {
+                  name = "YouTube";
+                  url = "https://www.youtube.com";
+                }
+                {
+                  name = "Google Messages";
+                  url = "https://messages.google.com";
+                }
+                {
+                  name = "WhatsApp";
+                  url = "https://web.whatsapp.com";
+                }
+              ];
+            }
+          ];
+
           extensions.force = true;
           
           extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
@@ -54,6 +77,28 @@
             sponsorblock
             return-youtube-dislikes
           ];
+
+          userContent = let
+            colors = config.lib.stylix.colors.withHashtag;
+            replaceColors = str: lib.replaceStrings
+              [
+                "@base00@" "@base01@" "@base02@" "@base03@"
+                "@base04@" "@base05@" "@base06@" "@base07@"
+                "@base08@" "@base09@" "@base0A@" "@base0B@"
+                "@base0C@" "@base0D@" "@base0E@" "@base0F@"
+              ]
+              [
+                colors.base00 colors.base01 colors.base02 colors.base03
+                colors.base04 colors.base05 colors.base06 colors.base07
+                colors.base08 colors.base09 colors.base0A colors.base0B
+                colors.base0C colors.base0D colors.base0E colors.base0F
+              ]
+              str;
+          in ''
+            ${replaceColors (builtins.readFile ./youtube.css)}
+            ${replaceColors (builtins.readFile ./messages.css)}
+            ${replaceColors (builtins.readFile ./whatsapp.css)}
+          '';
 
           arkenfox = {
             enable = true;
@@ -77,9 +122,16 @@
             "privacy.clearOnShutdown.cookies" = lib.mkForce false;
             "privacy.clearOnShutdown.offlineApps" = lib.mkForce false;
 
+            # Force Bookmarks Toolbar to show
+            "browser.toolbars.bookmarks.visibility" = lib.mkForce "always";
+
             # Theme matching and styling overrides
             "toolkit.legacyUserProfileCustomizations.stylesheets" = lib.mkForce true;
+            "layout.css.moz-document.content.enabled" = lib.mkForce true;
             "browser.display.use_document_colors" = lib.mkForce true;
+            "browser.display.document_color_use" = lib.mkForce 1;
+
+            # Disable RFP blocks that mess with custom CSS & elements
             "privacy.resistFingerprinting" = lib.mkForce false;
             "privacy.resistFingerprinting.letterboxing" = lib.mkForce false;
           };

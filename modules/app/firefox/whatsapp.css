@@ -1,0 +1,25 @@
+@-moz-document domain("web.whatsapp.com") {
+  body.dark, .dark {
+    --app-background: @base00@ !important;
+    --panel-header-background: @base01@ !important;
+    --panel-background-deep: @base00@ !important;
+    --background-default: @base00@ !important;
+    --background-default-hover: @base01@ !important;
+    --background-default-active: @base02@ !important;
+    --conversation-panel-background: @base00@ !important;
+    --input-placeholder: @base03@ !important;
+    
+    --message-out: @base0D@ !important;
+    --message-in: @base01@ !important;
+    
+    --primary: @base05@ !important;
+    --secondary: @base04@ !important;
+    --icon-ack: @base0D@ !important;
+    --icon-ack-read: @base0C@ !important;
+    
+    --compose-input-background: @base01@ !important;
+    --compose-input-background-hover: @base02@ !important;
+    --compose-input-border: transparent !important;
+    --compose-input-color: @base05@ !important;
+  }
+}

@@ -1,0 +1,34 @@
+@-moz-document domain("youtube.com") {
+  html, html[dark], [dark], ytd-app {
+    --yt-spec-brand-background-solid: @base00@ !important;
+    --yt-spec-general-background-a: @base00@ !important;
+    --yt-spec-general-background-b: @base01@ !important;
+    --yt-spec-general-background-c: @base02@ !important;
+    --yt-spec-raised-background: @base01@ !important;
+    --yt-spec-menu-background: @base01@ !important;
+    --yt-spec-base-background: @base00@ !important;
+    --yt-app-background-color: @base00@ !important;
+    --yt-main-app-background-color: @base00@ !important;
+
+    --yt-spec-text-primary: @base05@ !important;
+    --yt-spec-text-secondary: @base04@ !important;
+    --yt-spec-text-disabled: @base03@ !important;
+
+    --yt-spec-icon-active-other: @base0D@ !important;
+    --yt-spec-icon-inactive: @base04@ !important;
+    --yt-spec-brand-icon-active: @base08@ !important;
+    --yt-spec-brand-icon-inactive: @base04@ !important;
+
+    --yt-spec-call-to-action: @base0D@ !important;
+    
+    --yt-spec-static-brand-red: @base08@ !important;
+    --yt-spec-static-brand-white: @base05@ !important;
+    
+    --yt-spec-badge-chip-background: @base01@ !important;
+    --yt-spec-button-chip-background-hover: @base02@ !important;
+    --yt-spec-filled-button-focus-button-value: @base00@ !important;
+    
+    --ytd-searchbox-background: @base01@ !important;
+    --ytd-searchbox-text-color: @base05@ !important;
+  }
+}
