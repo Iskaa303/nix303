@@ -10,5 +10,7 @@
       wireplumber.enable = true;
     };
     services.pulseaudio.enable = false;
+
+    boot.extraModprobeConfig = "options snd_usb_audio power_save=0";
   };
 }

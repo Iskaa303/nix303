@@ -33,6 +33,8 @@ in {
       app_onlyoffice
       app_mpv
       app_flameshot
+      app_sober
+      app_ayugram
     ]);
 
     boot.initrd.systemd.enable = true;
@@ -59,6 +61,7 @@ in {
           "/var/lib/NetworkManager"
           { directory = "/etc/NetworkManager/system-connections"; mode = "0700"; }
           { directory = "/var/lib/bluetooth"; mode = "0700"; }
+          "/var/lib/flatpak"
         ];
         files = [
           "/etc/machine-id"
@@ -96,6 +99,8 @@ in {
             ".config/karere"
             ".pki"
             ".local/share/Trash"
+            ".var/app/org.vinegarhq.Sober"
+            ".local/share/AyuGramDesktop"
           ];
           files = [
           ];
