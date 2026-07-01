@@ -7,6 +7,12 @@
           
           liquidbounceDeps = with pkgs; [
             stdenv.cc.cc.lib
+            zlib
+            flac
+            libogg
+            libvorbis
+            mesa
+            xorg.libXxf86vm
             libgbm
             glib
             nss

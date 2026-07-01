@@ -675,6 +675,26 @@
         "type": "github"
       }
     },
+    "pi-flake": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1782302267,
+        "narHash": "sha256-lPvThvgbPrWzlFbp56QqH6QnAoNL+mDbu1pUEulNWkk=",
+        "owner": "ChauDucToan",
+        "repo": "pi-flake",
+        "rev": "5a64b4c95169ddcbd7c3ad131d7376f11a9540dc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ChauDucToan",
+        "repo": "pi-flake",
+        "type": "github"
+      }
+    },
     "pre-commit": {
       "inputs": {
         "flake-compat": [
@@ -731,6 +751,7 @@
         "nixpkgs": "nixpkgs",
         "noctalia": "noctalia",
         "nur": "nur",
+        "pi-flake": "pi-flake",
         "preservation": "preservation",
         "stylix": "stylix",
         "wrapper-modules": "wrapper-modules"

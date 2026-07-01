@@ -24,6 +24,9 @@ in {
       cli_git
       cli_atuin
       cli_fastfetch
+      cli_television
+      cli_pi
+      cli_anime
       theme_stylix
       app_firefox
       app_ghostty
@@ -78,6 +81,7 @@ in {
           directories = [
             "Documents"
             "Projects"
+            "Games"
             ".mozilla"
             ".config/mozilla"
             ".config/gh"
@@ -101,6 +105,10 @@ in {
             ".local/share/Trash"
             ".var/app/org.vinegarhq.Sober"
             ".local/share/AyuGramDesktop"
+            ".config/television"
+            ".local/share/television"
+            ".cache/television"
+            ".pi"
           ];
           files = [
           ];

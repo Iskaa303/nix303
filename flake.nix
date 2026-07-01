@@ -67,6 +67,11 @@
       url = "github:gmodena/nix-flatpak/?ref=latest";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    pi-flake = {
+      url = "github:ChauDucToan/pi-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake
