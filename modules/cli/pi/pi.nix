@@ -30,21 +30,14 @@
         ];
       };
 
-      # Symlink LSP servers so pi-shazam discovers them via trustedUserCandidates
+      # Symlink LSP binaries into ~/.local/bin/ — pi-shazam's trustedUserCandidates
+      # checks this path as its first user-candidate location.
       home.file.".local/bin/vscode-json-language-server".source = "${pkgs.vscode-json-languageserver}/bin/vscode-json-language-server";
       home.file.".local/bin/typescript-language-server".source = "${pkgs.typescript-language-server}/bin/typescript-language-server";
       home.file.".local/bin/rust-analyzer".source = "${pkgs.rust-analyzer}/bin/rust-analyzer";
       home.file.".local/bin/gopls".source = "${pkgs.gopls}/bin/gopls";
       home.file.".local/bin/yaml-language-server".source = "${pkgs.yaml-language-server}/bin/yaml-language-server";
       home.file.".local/bin/pyright-langserver".source = "${pkgs.pyright}/bin/pyright-langserver";
-
-      # Compat shim: pi's JS runtime doesn't support package.json exports field
-      # so require('vscode-jsonrpc/node') fails. This creates node.js that
-      # re-exports via direct path.
-      home.file.".pi/agent/npm/node_modules/vscode-jsonrpc/node.js".text = ''
-        'use strict';
-        module.exports = require('./lib/node/main.js');
-      '';
 
       # Load skills from the .md files in this directory
       home.file.".pi/agent/skills/nixos-env/SKILL.md".source = ./nixos-env.md;
