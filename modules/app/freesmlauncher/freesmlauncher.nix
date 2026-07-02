@@ -12,7 +12,7 @@
             libogg
             libvorbis
             mesa
-            xorg.libXxf86vm
+            libxxf86vm
             libgbm
             glib
             nss

@@ -46,13 +46,6 @@
         module.exports = require('./lib/node/main.js');
       '';
 
-      # Pre-configure pi settings for NixOS environment
-      home.file.".pi/agent/settings.json".text = builtins.toJSON {
-        shellPath = "${pkgs.nushell}/bin/nu";
-        lastChangelogVersion = "0.80.2";
-        theme = "dark";
-      };
-
       # Load skills from the .md files in this directory
       home.file.".pi/agent/skills/nixos-env/SKILL.md".source = ./nixos-env.md;
       home.file.".pi/agent/skills/hashline-edit/SKILL.md".source = ./hashline-edit.md;
