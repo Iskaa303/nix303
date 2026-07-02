@@ -16,7 +16,7 @@
             pkgs.gnugrep pkgs.gnused pkgs.findutils pkgs.gawk
             pkgs.vscode-json-languageserver pkgs.typescript-language-server pkgs.rust-analyzer
             pkgs.gopls pkgs.yaml-language-server pkgs.pyright
-          ]}:$PATH";
+          ]}:$HOME/.local/bin:$PATH";
         };
         models = {
           providers = {};
@@ -38,6 +38,18 @@
       home.file.".local/bin/gopls".source = "${pkgs.gopls}/bin/gopls";
       home.file.".local/bin/yaml-language-server".source = "${pkgs.yaml-language-server}/bin/yaml-language-server";
       home.file.".local/bin/pyright-langserver".source = "${pkgs.pyright}/bin/pyright-langserver";
+
+      # Disable pi-flake's broken node.js symlink (flat nix-store file;
+      # relative require fails). We create a real file via activation instead.
+      home.file.".pi/agent/npm/node_modules/vscode-jsonrpc/node.js".enable = false;
+
+      # vscode-jsonrpc compat shim + pi-shazam NixOS patches.
+      # Runs at every HM activation, idempotent.
+      home.file.".pi/agent/lib/shazam-compat.sh".source = ./pi-shazam-compat.sh;
+
+      home.activation.shazamCompat = ''
+        bash "$HOME/.pi/agent/lib/shazam-compat.sh"
+      '';
 
       # Load skills from the .md files in this directory
       home.file.".pi/agent/skills/nixos-env/SKILL.md".source = ./nixos-env.md;
