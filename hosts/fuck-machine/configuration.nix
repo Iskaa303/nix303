@@ -37,6 +37,7 @@ in {
       app_mpv
       app_flameshot
       app_sober
+      app_siyuan
       app_ayugram
     ]);
 
@@ -97,6 +98,7 @@ in {
             ".config/Vencord"
             ".local/share/FreesmLauncher"
             ".config/onlyoffice"
+            "SiYuan"
             ".local/share/onlyoffice"
             ".local/share/atuin"
             ".local/share/karere"

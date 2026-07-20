@@ -1,12 +1,13 @@
 { ... }: {
   flake.modules.nixos.cli_anime = { pkgs, ... }: {
     hm.home.packages = [
+      pkgs.botan3
       (pkgs.ani-cli.overrideAttrs (old: {
         src = pkgs.fetchFromGitHub {
           owner = "pystardust";
           repo = "ani-cli";
-          rev = "89ec9314eba7b66c894bf8bbf3b2b25a3b80743a";
-          hash = "sha256-wU25uSikLbuzQ/nAZzWz3ilpM1Ewac4ZuICRCwUn/fQ=";
+          rev = "4c5a72e319964ef343e517b44822683db4487e1a";
+          hash = "sha256-sB2hUNFZP3cyg1jQpKiCwxjSz7n4Ii9qG3lhB65LAS8=";
         };
       }))
       (pkgs.ani-skip.overrideAttrs (old: {
