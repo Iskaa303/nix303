@@ -83,6 +83,7 @@ in {
             "Documents"
             "Projects"
             "Games"
+            "Videos"
             ".mozilla"
             ".config/mozilla"
             ".config/gh"
