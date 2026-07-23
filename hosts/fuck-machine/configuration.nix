@@ -29,6 +29,7 @@ in {
       cli_pi
       cli_anime
       cli_kari
+      cli_lenovo
       theme_stylix
       app_firefox
       app_ghostty
