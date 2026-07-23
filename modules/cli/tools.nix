@@ -14,6 +14,8 @@
       pkgs.fzf
       pkgs.fd
       pkgs.devenv
+      pkgs.yt-dlp
+      pkgs.aria2
     ];
   };
 }

@@ -27,6 +27,7 @@ in {
       cli_television
       cli_pi
       cli_anime
+      cli_kari
       theme_stylix
       app_firefox
       app_ghostty
