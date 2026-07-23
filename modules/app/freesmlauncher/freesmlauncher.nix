@@ -56,7 +56,10 @@
             rm -f $out/bin/freesmlauncher
             makeWrapper ${freesm-raw}/bin/freesmlauncher $out/bin/freesmlauncher \
               --prefix LD_LIBRARY_PATH : "${libPath}" \
-              --prefix NIX_LD_LIBRARY_PATH : "${libPath}"
+              --prefix NIX_LD_LIBRARY_PATH : "${libPath}" \
+              --set __NV_PRIME_RENDER_OFFLOAD 1 \
+              --set __GLX_VENDOR_LIBRARY_NAME nvidia \
+              --set __VK_LAYER_NV_OPTIMUS NVIDIA_only
           '';
         })
       ];

@@ -13,6 +13,7 @@ in {
       core_base
       core_desktop
       core_audio
+      core_nvidia
       desktop_niri
       desktop_noctalia
       core_home-manager
