@@ -42,6 +42,7 @@ in {
       app_sober
       app_siyuan
       app_ayugram
+      app_odysseus
     ]);
 
     boot.initrd.systemd.enable = true;
@@ -69,6 +70,11 @@ in {
           { directory = "/etc/NetworkManager/system-connections"; mode = "0700"; }
           { directory = "/var/lib/bluetooth"; mode = "0700"; }
           "/var/lib/flatpak"
+          "/var/lib/docker"
+          "/persist/odysseus/data"
+          "/persist/odysseus/searxng"
+          "/persist/odysseus/chromadb"
+          "/persist/odysseus/ntfy"
         ];
         files = [
           "/etc/machine-id"

@@ -4,7 +4,7 @@ let
 in {
   users.users."${vars.username}" = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "audio" "usb" "video" "networkmanager" ];
+    extraGroups = [ "wheel" "audio" "usb" "video" "networkmanager" "docker" ];
     hashedPasswordFile = "/persist/passwords/${vars.username}";
   };
 }

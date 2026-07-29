@@ -68,6 +68,10 @@
                     name = "WhatsApp";
                     url = "https://web.whatsapp.com";
                   }
+                  {
+                    name = "Odysseus";
+                    url = "http://localhost:7000";
+                  }
                 ];
               }
             ];
