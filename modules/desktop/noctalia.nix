@@ -1,5 +1,5 @@
 { inputs, ... }: {
-  flake.modules.nixos.desktop_noctalia = { config, ... }: {
+  flake.modules.nixos.desktop_noctalia = { config, lib, ... }: {
     services.upower.enable = true;
 
     hm = {
@@ -29,7 +29,7 @@
           theme = {
             mode = "dark";
             source = "custom";
-            custom_palette = "stylix-theme";
+            custom_palette = lib.mkForce "stylix-theme";
           };
           templates = {
             enable_builtin_templates = false;
@@ -38,7 +38,7 @@
           wallpaper = {
             enabled = true;
             directory = "/persist/etc/nixos/assets";
-            default.path = "/persist/etc/nixos/assets/wallpaper.png";
+            default.path = lib.mkForce "/persist/etc/nixos/assets/wallpaper.png";
           };
         };
         customPalettes = {

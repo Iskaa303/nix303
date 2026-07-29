@@ -20,6 +20,9 @@
         vesktop = {
           enable = true;
         };
+        discord = {
+          silenceNoModClientWarning = true;
+        };
       };
     };
   };

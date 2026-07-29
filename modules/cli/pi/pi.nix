@@ -22,7 +22,6 @@
           providers = {};
         };
         extensions = [
-          "npm:pi-hashline-edit-pro"
           "git:github.com/DietrichGebert/ponytail"
           "npm:@narumitw/pi-wait-what"
           "npm:@narumitw/pi-statusline"
@@ -32,6 +31,11 @@
 
       # Symlink LSP binaries into ~/.local/bin/ — pi-shazam's trustedUserCandidates
       # checks this path as its first user-candidate location.
+      # pi-statusline config: add cost to the status line
+      home.file.".pi/agent/pi-statusline.json".text = builtins.toJSON {
+        segments = ["model" "thinking" "cwd" "branch" "tools" "context" "cost" "time"];
+      };
+
       home.file.".local/bin/vscode-json-language-server".source = "${pkgs.vscode-json-languageserver}/bin/vscode-json-language-server";
       home.file.".local/bin/typescript-language-server".source = "${pkgs.typescript-language-server}/bin/typescript-language-server";
       home.file.".local/bin/rust-analyzer".source = "${pkgs.rust-analyzer}/bin/rust-analyzer";
@@ -53,7 +57,6 @@
 
       # Load skills from the .md files in this directory
       home.file.".pi/agent/skills/nixos-env/SKILL.md".source = ./nixos-env.md;
-      home.file.".pi/agent/skills/hashline-edit/SKILL.md".source = ./hashline-edit.md;
 
       home.file.".pi/agent/trust.json".text = builtins.toJSON {
         "/home/${username}" = true;

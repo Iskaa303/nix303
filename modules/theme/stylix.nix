@@ -2,6 +2,8 @@
   flake.modules.nixos.theme_stylix = { pkgs, ... }: {
     imports = [ inputs.stylix.nixosModules.stylix ];
 
+    hm.home.pointerCursor.enable = true;
+
     stylix = {
       enable = true;
       image = ../../assets/wallpaper.png;
