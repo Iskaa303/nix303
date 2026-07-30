@@ -1,0 +1,7 @@
+keys:
+  - &host_fuck_machine age1mgaramw6zxf56nqg0prwp96w39sue3dn47ldjpgrr9xfrjnza9dquxjth4
+creation_rules:
+  - path_regex: modules/cli/searxng/secrets\.yaml$
+    key_groups:
+    - age:
+      - *host_fuck_machine

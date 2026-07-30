@@ -29,6 +29,7 @@ in {
       cli_pi
       cli_ketch
       cli_searxng
+      cli_sops
       cli_anime
       cli_kari
       cli_lenovo
@@ -123,7 +124,9 @@ in {
             ".local/share/television"
             ".cache/television"
             ".config/obs-studio"
+            ".config/sops"
             ".pi"
+            ".cache/ketch"
           ];
           files = [
           ];

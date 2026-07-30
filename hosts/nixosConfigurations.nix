@@ -11,7 +11,7 @@ in {
         inputs.home-manager.nixosModules.home-manager
         inputs.sops-nix.nixosModules.sops
         {
-          sops.age.keyFile = "/home/iskaa303/.config/sops/age/keys.txt";
+          sops.age.keyFile = "/persist/home/iskaa303/.config/sops/age/keys.txt";
         }
         {
           home-manager = {

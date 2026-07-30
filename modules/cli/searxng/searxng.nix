@@ -1,9 +1,12 @@
 { config, ... }: {
-  flake.modules.nixos.cli_searxng = { lib, ... }: {
+  flake.modules.nixos.cli_searxng = { lib, config, ... }: {
+    sops.secrets.searxng-secret = {
+      sopsFile = ./secrets.yaml;
+    };
+
     services.searx = {
       enable = true;
       redisCreateLocally = true;
-      environmentFile = "/home/iskaa303/.searxng.env";
 
       settings = {
         general = {
@@ -22,6 +25,7 @@
           public_instance = false;
           image_proxy = true;
           method = "GET";
+          secret_key = config.sops.secrets.searxng-secret.path;
         };
 
         botdetection = {
