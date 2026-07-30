@@ -97,6 +97,8 @@ in {
             "Games"
             "Videos"
             ".mozilla"
+            ".cache/ketch"
+            ".config/ketch"
             ".config/mozilla"
             ".config/gh"
             ".config/nushell"
@@ -126,7 +128,6 @@ in {
             ".config/obs-studio"
             ".config/sops"
             ".pi"
-            ".cache/ketch"
           ];
           files = [
           ];
