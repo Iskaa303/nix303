@@ -10,12 +10,14 @@
         enable = true;
         mutableDir = true;
         extraEnv = {
+          SHELL = "${pkgs.bash}/bin/bash";
           PATH = "${pkgs.lib.makeBinPath [
             pkgs.bash pkgs.coreutils pkgs.nodejs pkgs.git pkgs.bun
             pkgs.fd pkgs.ripgrep pkgs.gnutar
             pkgs.gnugrep pkgs.gnused pkgs.findutils pkgs.gawk
             pkgs.vscode-json-languageserver pkgs.typescript-language-server pkgs.rust-analyzer
             pkgs.gopls pkgs.yaml-language-server pkgs.pyright
+            pkgs.ketch
           ]}:$HOME/.local/bin:$PATH";
         };
         models = {
@@ -27,6 +29,7 @@
           "npm:@narumitw/pi-statusline"
           "npm:pi-shazam"
           "npm:pi-notify"
+          "npm:pi-ketch"
         ];
       };
 
@@ -55,15 +58,6 @@
       home.activation.shazamCompat = ''
         bash "$HOME/.pi/agent/lib/shazam-compat.sh"
       '';
-
-      # Load skills from the .md files in this directory
-      home.file.".pi/agent/skills/nixos-env/SKILL.md".source = ./nixos-env.md;
-
-      # Web search extension (ketch-backed)
-      home.file.".pi/agent/extensions/web-search/index.ts".source = ./web-search.ts;
-
-      # Nushell syntax extension
-      home.file.".pi/agent/extensions/nushell/index.ts".source = ./nushell.ts;
 
       home.file.".pi/agent/trust.json".text = builtins.toJSON {
         "/home/${username}" = true;
