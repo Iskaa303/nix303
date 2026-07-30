@@ -16,6 +16,7 @@
       pkgs.devenv
       pkgs.yt-dlp
       pkgs.aria2
+      pkgs.scooter
     ];
   };
 }

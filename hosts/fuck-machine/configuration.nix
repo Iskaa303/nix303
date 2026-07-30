@@ -33,6 +33,7 @@ in {
       cli_anime
       cli_kari
       cli_lenovo
+      cli_zrok
       theme_stylix
       app_firefox
       app_ghostty
