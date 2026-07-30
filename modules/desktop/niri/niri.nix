@@ -17,14 +17,15 @@
       enable = true;
       extraPortals = with pkgs; [
         xdg-desktop-portal-gtk
-        xdg-desktop-portal-gnome
+        xdg-desktop-portal-wlr
       ];
       config = {
         common = {
-          default = [ "gnome" "gtk" ];
+          default = [ "gtk" ];
           "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
           "org.freedesktop.impl.portal.FileDialog" = [ "gtk" ];
           "org.freedesktop.impl.portal.OpenURI" = [ "gtk" ];
+          "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
         };
       };
     };

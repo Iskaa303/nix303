@@ -12,9 +12,6 @@
             
             showStartupLaunchMessage = false;
             saveLastRegion = true;
-
-            useGrimAdapter = true;
-            disabledGrimWarning = true;
           };
         };
       };

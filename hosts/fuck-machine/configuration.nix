@@ -34,7 +34,6 @@ in {
       app_firefox
       app_ghostty
       app_nixcord
-      app_antigravity
       app_freesm
       app_onlyoffice
       app_mpv

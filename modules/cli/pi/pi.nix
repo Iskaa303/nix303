@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{ ... }: {
   flake.modules.nixos.cli_pi = { pkgs, inputs, username, ... }: {
     nixpkgs.overlays = [ inputs.pi-flake.overlays.default ];
 
@@ -26,6 +26,7 @@
           "npm:@narumitw/pi-wait-what"
           "npm:@narumitw/pi-statusline"
           "npm:pi-shazam"
+          "npm:pi-notify"
         ];
       };
 
