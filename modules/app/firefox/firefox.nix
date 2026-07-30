@@ -49,6 +49,24 @@
           name = userVars.username;
           isDefault = true;
 
+          search = {
+            force = true;
+            default = "SearXNG";
+            privateDefault = "SearXNG";
+            engines = {
+              "SearXNG" = {
+                urls = [{ template = "http://localhost:8888/search?q={searchTerms}"; }];
+                icon = "http://localhost:8888/favicon.ico";
+                updateInterval = 24 * 60 * 60 * 1000;
+                definedAliases = [ "@sx" ];
+              };
+              "google".metaData.hidden = true;
+              "bing".metaData.hidden = true;
+              "ddg".metaData.hidden = true;
+              "wikipedia".metaData.hidden = true;
+            };
+          };
+
           bookmarks = {
             force = true;
             settings = [

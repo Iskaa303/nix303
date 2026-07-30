@@ -59,6 +59,12 @@
       # Load skills from the .md files in this directory
       home.file.".pi/agent/skills/nixos-env/SKILL.md".source = ./nixos-env.md;
 
+      # Web search extension (ketch-backed)
+      home.file.".pi/agent/extensions/web-search/index.ts".source = ./web-search.ts;
+
+      # Nushell syntax extension
+      home.file.".pi/agent/extensions/nushell/index.ts".source = ./nushell.ts;
+
       home.file.".pi/agent/trust.json".text = builtins.toJSON {
         "/home/${username}" = true;
       };

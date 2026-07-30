@@ -27,6 +27,8 @@ in {
       cli_fastfetch
       cli_television
       cli_pi
+      cli_ketch
+      cli_searxng
       cli_anime
       cli_kari
       cli_lenovo

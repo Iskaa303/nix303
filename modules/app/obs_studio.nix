@@ -4,17 +4,23 @@
       home.packages = [ pkgs.obs-studio ];
 
       xdg.configFile = {
-        "obs-studio/global.ini".text = ''
-          [General]
-          CurrentProfile=Default
-        '';
-        "obs-studio/basic/profiles/Default/basic.ini".text = ''
-          [SimpleOutput]
-          FilePath=${config.home.homeDirectory}/Videos/Recordings
+        "obs-studio/global.ini" = {
+          force = true;
+          text = ''
+            [General]
+            CurrentProfile=Default
+          '';
+        };
+        "obs-studio/basic/profiles/Default/basic.ini" = {
+          force = true;
+          text = ''
+            [SimpleOutput]
+            FilePath=${config.home.homeDirectory}/Videos/Recordings
 
-          [AdvOut]
-          RecFilePath=${config.home.homeDirectory}/Videos/Recordings
-        '';
+            [AdvOut]
+            RecFilePath=${config.home.homeDirectory}/Videos/Recordings
+          '';
+        };
       };
     };
   };
