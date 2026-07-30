@@ -41,6 +41,7 @@ in {
       app_sober
       app_siyuan
       app_ayugram
+      app_obs_studio
       app_odysseus
     ]);
 
@@ -119,6 +120,7 @@ in {
             ".config/television"
             ".local/share/television"
             ".cache/television"
+            ".config/obs-studio"
             ".pi"
           ];
           files = [

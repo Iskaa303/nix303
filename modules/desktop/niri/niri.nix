@@ -5,7 +5,7 @@
 
     programs.niri = {
       enable = true;
-      package = pkgs.niri-unstable;
+      package = pkgs.niri;
     };
 
     environment.sessionVariables = {
@@ -18,6 +18,7 @@
       extraPortals = with pkgs; [
         xdg-desktop-portal-gtk
         xdg-desktop-portal-wlr
+        xdg-desktop-portal-gnome
       ];
       config = {
         common = {
@@ -26,6 +27,7 @@
           "org.freedesktop.impl.portal.FileDialog" = [ "gtk" ];
           "org.freedesktop.impl.portal.OpenURI" = [ "gtk" ];
           "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
+          "org.freedesktop.impl.portal.ScreenCast" = [ "gnome" ];
         };
       };
     };

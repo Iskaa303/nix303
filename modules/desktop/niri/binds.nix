@@ -7,6 +7,7 @@
       "Mod+B".action.spawn = "firefox";
       "Mod+D".action.spawn = [ "noctalia" "msg" "panel-toggle" "launcher" ];
       "Mod+E".action.spawn = [ "noctalia" "msg" "panel-toggle" "session" ];
+      "Mod+O".action.spawn = "obs";
       "Mod+Q".action.close-window = {};
 
       # Navigation
