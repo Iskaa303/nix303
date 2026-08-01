@@ -47,6 +47,7 @@ in {
       app_ayugram
       app_obs_studio
       app_odysseus
+      app_thunderbird
     ]);
 
     boot.initrd.systemd.enable = true;
@@ -129,6 +130,7 @@ in {
             ".config/obs-studio"
             ".config/sops"
             ".pi"
+            ".thunderbird"
           ];
           files = [
           ];

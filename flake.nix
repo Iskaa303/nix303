@@ -71,6 +71,17 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    phoenix = {
+      url = "git+https://gitlab.com/celenityy/Phoenix?ref=pages";
+      flake = false;
+    };
+
+    dove = {
+      url = "git+https://gitlab.com/celenityy/Dove.git?ref=pages";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.phoenix.follows = "phoenix";
+    };
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake

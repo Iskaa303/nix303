@@ -22,6 +22,23 @@
         "type": "github"
       }
     },
+    "autoconfig": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1771930362,
+        "narHash": "sha256-phTO75u5rqMvFrrNjBecfvPpLyojJvkCDWHkNFU5jK8=",
+        "owner": "thunderbird",
+        "repo": "autoconfig",
+        "rev": "ddd01002de8a037df2bed395059799bb185f5052",
+        "type": "github"
+      },
+      "original": {
+        "owner": "thunderbird",
+        "ref": "prod",
+        "repo": "autoconfig",
+        "type": "github"
+      }
+    },
     "base16": {
       "inputs": {
         "fromYaml": "fromYaml"
@@ -108,6 +125,31 @@
         "owner": "nix-community",
         "repo": "disko",
         "type": "github"
+      }
+    },
+    "dove": {
+      "inputs": {
+        "autoconfig": "autoconfig",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "phoenix": [
+          "phoenix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1785178429,
+        "narHash": "sha256-uHJ2VxvuOkuP3bFy7j2BrFqrD07blEkEowdqwTSFpAw=",
+        "ref": "pages",
+        "rev": "ecc90ca299975136fb2413a3612aa70bbfd2f979",
+        "revCount": 919,
+        "type": "git",
+        "url": "https://gitlab.com/celenityy/Dove.git"
+      },
+      "original": {
+        "ref": "pages",
+        "type": "git",
+        "url": "https://gitlab.com/celenityy/Dove.git"
       }
     },
     "firefox-gnome-theme": {
@@ -659,6 +701,23 @@
         "type": "github"
       }
     },
+    "phoenix": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1785176031,
+        "narHash": "sha256-y+0vG9MY343oQb0usC/vd8jiHX3MbCSitEVGiLE1SUI=",
+        "ref": "pages",
+        "rev": "b33d59609dd3a2fd7df9d77a94e782e074887a36",
+        "revCount": 3236,
+        "type": "git",
+        "url": "https://gitlab.com/celenityy/Phoenix"
+      },
+      "original": {
+        "ref": "pages",
+        "type": "git",
+        "url": "https://gitlab.com/celenityy/Phoenix"
+      }
+    },
     "pi-flake": {
       "inputs": {
         "home-manager": "home-manager_2",
@@ -725,6 +784,7 @@
       "inputs": {
         "arkenfox": "arkenfox",
         "disko": "disko",
+        "dove": "dove",
         "flake-parts": "flake-parts",
         "freesm-launcher": "freesm-launcher",
         "home-manager": "home-manager",
@@ -735,6 +795,7 @@
         "nixpkgs": "nixpkgs",
         "noctalia": "noctalia",
         "nur": "nur",
+        "phoenix": "phoenix",
         "pi-flake": "pi-flake",
         "preservation": "preservation",
         "sops-nix": "sops-nix",
