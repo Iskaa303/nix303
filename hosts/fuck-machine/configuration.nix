@@ -48,6 +48,7 @@ in {
       app_obs_studio
       app_odysseus
       app_thunderbird
+      app_qbittorrent
     ]);
 
     boot.initrd.systemd.enable = true;
@@ -94,6 +95,7 @@ in {
         users."${vars.username}" = {
           home = "/home/${vars.username}";
           directories = [
+            "TorrentDownloads"
             "Documents"
             "Projects"
             "Games"
@@ -131,6 +133,8 @@ in {
             ".config/sops"
             ".pi"
             ".thunderbird"
+            ".config/qBittorrent"
+            ".local/share/qBittorrent"
           ];
           files = [
           ];

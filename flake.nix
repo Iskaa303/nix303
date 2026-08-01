@@ -82,6 +82,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.phoenix.follows = "phoenix";
     };
+
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake

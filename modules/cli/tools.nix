@@ -17,6 +17,8 @@
       pkgs.yt-dlp
       pkgs.aria2
       pkgs.scooter
+      pkgs.parted
+      pkgs.file
     ];
   };
 }
