@@ -1,15 +1,16 @@
 {
   flake.modules.nixos.desktop_niri = {
     hm.programs.niri.settings = {
-      # AOC AG276QZD2 on the NVIDIA GPU's HDMI port: EDID caps 1440p at 144 Hz
-      # over HDMI 2.0 (240/280 Hz needs the DP port instead).
       outputs = {
         "HDMI-A-1" = {
+          position = { x = 0; y = 0; };
           mode = {
             width = 2560;
             height = 1440;
-            refresh = 144.0;
           };
+        };
+        "eDP-1" = {
+          position = { x = 2560; y = 0; };
         };
       };
 
