@@ -39,6 +39,8 @@
               "[. ]reddit.com"
               "https://whatsapp.com"
               "[. ]whatsapp.com"
+              "https://codeberg.org"
+              "[. ]codeberg.org"
             ];
             Behavior = "reject-tracker";
           };
