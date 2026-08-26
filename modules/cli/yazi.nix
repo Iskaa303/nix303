@@ -85,7 +85,8 @@
       };
 
       settings = {
-        manager = {
+        # yazi >= 25.x renamed [manager] to [mgr]
+        mgr = {
           ratio = [ 1 4 3 ];
           sort_by = "natural";
           sort_sensitive = true;
@@ -113,7 +114,7 @@
         };
         opener = {
           edit = [
-            { run = ''hx "$@"''; block = true; desc = "Helix"; }
+            { run = "hx %s"; block = true; desc = "Helix"; }
           ];
           play = [
             { run = ''mpv "$@"''; orphan = true; for = "unix"; desc = "MPV"; }

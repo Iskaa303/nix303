@@ -18,6 +18,10 @@ $env.config = {
 # Global Aliases
 
 alias ff = fastfetch
+# Show dotfiles (.git etc.) by default
+alias ls = ls --all
+# Re-apply pi-shazam patches (pre-commit hook disable) after npm reinstalls
+^bash ~/.pi/agent/lib/shazam-compat.sh
 alias lg = lazygit
 
 # Starship Transient Prompt
