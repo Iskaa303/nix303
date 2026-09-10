@@ -117,7 +117,7 @@
             { run = "hx %s"; block = true; desc = "Helix"; }
           ];
           play = [
-            { run = ''mpv "$@"''; orphan = true; for = "unix"; desc = "MPV"; }
+            { run = ''mpv %s''; orphan = true; for = "unix"; desc = "MPV"; }
           ];
         };
         open = {

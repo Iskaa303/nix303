@@ -117,6 +117,7 @@ in {
             ".config/Vencord"
             ".local/share/FreesmLauncher"
             ".config/onlyoffice"
+            ".cleanroom"
             "SiYuan"
             ".local/share/onlyoffice"
             ".local/share/atuin"

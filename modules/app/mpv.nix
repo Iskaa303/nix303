@@ -26,9 +26,9 @@
           keep-open = "yes";
           profile = "gpu-hq";
           vo = "gpu";
-          hwdec = "auto-safe";
+          hwdec = "auto-copy-safe";
 
-          autofit-large = "90%x90%";
+          autofit-larger = "90%x90%";
 
           keepaspect-window = "no";
         };
