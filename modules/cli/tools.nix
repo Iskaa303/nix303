@@ -19,6 +19,7 @@
       pkgs.scooter
       pkgs.parted
       pkgs.file
+      pkgs.ocrmypdf
     ];
   };
 }

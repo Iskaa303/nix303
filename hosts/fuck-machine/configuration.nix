@@ -49,6 +49,7 @@ in {
       app_odysseus
       app_thunderbird
       app_qbittorrent
+      app_sioyek
     ]);
 
     boot.initrd.systemd.enable = true;
@@ -136,6 +137,8 @@ in {
             ".thunderbird"
             ".config/qBittorrent"
             ".local/share/qBittorrent"
+            ".config/sioyek"
+            ".local/share/sioyek"
           ];
           files = [
           ];
