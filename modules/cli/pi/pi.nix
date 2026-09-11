@@ -8,7 +8,6 @@
 
       programs.pi-coding-agent = {
         enable = true;
-        mutableDir = true;
         extraEnv = {
           SHELL = "${pkgs.bash}/bin/bash";
           PATH = "${pkgs.lib.makeBinPath [
@@ -19,9 +18,6 @@
             pkgs.gopls pkgs.yaml-language-server pkgs.pyright
             pkgs.ketch
           ]}:$HOME/.local/bin:$PATH";
-        };
-        models = {
-          providers = {};
         };
         extensions = [
           "git:github.com/DietrichGebert/ponytail"

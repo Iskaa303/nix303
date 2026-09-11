@@ -37,7 +37,7 @@ in {
       theme_stylix
       app_firefox
       app_ghostty
-      app_nixcord
+      app_vencord
       app_freesm
       app_onlyoffice
       app_mpv
