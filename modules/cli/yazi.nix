@@ -124,6 +124,7 @@
           prepend_rules = [
             { mime = "video/*"; use = "play"; }
             { mime = "audio/*"; use = "play"; }
+            { mime = "image/*"; use = "play"; }
             { mime = "text/*"; use = "edit"; }
           ];
         };
