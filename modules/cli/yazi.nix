@@ -125,7 +125,6 @@
             { mime = "video/*"; use = "play"; }
             { mime = "audio/*"; use = "play"; }
             { mime = "text/*"; use = "edit"; }
-            { url = "*"; use = "edit"; }
           ];
         };
       };

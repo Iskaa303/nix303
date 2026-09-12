@@ -12,7 +12,6 @@ $env.config = {
             max_results: 100
         }
     }
-    keybindings: []
 }
 
 # Global Aliases

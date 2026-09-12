@@ -8,6 +8,11 @@
       configFile.source = ./config.nu;
     };
 
+    hm.programs.carapace = {
+      enable = true;
+      enableNushellIntegration = true;
+    };
+
     hm.programs.starship = {
       enable = true;
       enableNushellIntegration = true;

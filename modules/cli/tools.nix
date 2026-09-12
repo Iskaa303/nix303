@@ -10,7 +10,6 @@
     };
 
     hm.home.packages = [
-      pkgs.tdf
       pkgs.fzf
       pkgs.fd
       pkgs.devenv
@@ -20,6 +19,7 @@
       pkgs.parted
       pkgs.file
       pkgs.ocrmypdf
+      pkgs.tlrc
     ];
   };
 }
