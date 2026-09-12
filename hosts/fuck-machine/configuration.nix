@@ -131,6 +131,7 @@ in {
             ".config/television"
             ".local/share/television"
             ".cache/television"
+            ".cache/tlrc"
             ".config/obs-studio"
             ".config/sops"
             ".pi"
