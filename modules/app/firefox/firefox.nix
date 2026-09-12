@@ -89,10 +89,6 @@
                     url = "https://web.whatsapp.com";
                   }
                   {
-                    name = "Odysseus";
-                    url = "http://localhost:7000";
-                  }
-                  {
                     name = "CMS Launchpad";
                     url = "https://launchpad.classlink.com/cmsk12";
                   }

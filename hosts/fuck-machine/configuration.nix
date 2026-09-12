@@ -31,9 +31,7 @@ in {
       cli_searxng
       cli_sops
       cli_anime
-      cli_kari
       cli_lenovo
-      cli_zrok
       theme_stylix
       app_firefox
       app_ghostty
@@ -46,7 +44,6 @@ in {
       app_siyuan
       app_ayugram
       app_obs_studio
-      app_odysseus
       app_thunderbird
       app_qbittorrent
       app_sioyek
