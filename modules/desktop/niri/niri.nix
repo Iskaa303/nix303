@@ -26,8 +26,14 @@
           "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
           "org.freedesktop.impl.portal.FileDialog" = [ "gtk" ];
           "org.freedesktop.impl.portal.OpenURI" = [ "gtk" ];
-          "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
+          # niri's own screencasting docs (wiki/Screencasting) require
+          # xdg-desktop-portal-gnome: it drives niri through the standard
+          # ext-image-copy-capture protocol. xdg-desktop-portal-wlr negotiates a
+          # stream, goes streaming, and is torn down ~300ms later with zero
+          # frames delivered - Discord then rejects getDisplayMedia with
+          # INVALID_DISPLAY_CAPTURE_CONSTRAINTS and OBS records black.
           "org.freedesktop.impl.portal.ScreenCast" = [ "gnome" ];
+          "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
         };
       };
     };

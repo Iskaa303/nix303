@@ -15,7 +15,9 @@
       pkgs.devenv
       pkgs.yt-dlp
       pkgs.aria2
-      pkgs.scooter
+      pkgs.serpl
+      pkgs.ast-grep
+      pkgs.comma
       pkgs.parted
       pkgs.file
       pkgs.ocrmypdf

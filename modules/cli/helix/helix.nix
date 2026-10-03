@@ -17,6 +17,19 @@
             select = "underline";
           };
           lsp.display-messages = true;
+
+          # Cosmetics (lifted from theylix)
+          color-modes = true;
+          bufferline = "multiple";
+          statusline = {
+            separator = "│";
+            left = [ "mode" "spinner" ];
+            center = [ "file-modification-indicator" "file-name" "selections" "position" ];
+            right = [ "diagnostics" "file-encoding" "file-type" "spinner" ];
+            mode.normal = "NORMAL";
+            mode.insert = "INSERT";
+            mode.select = "SELECT";
+          };
         };
       };
       languages = {

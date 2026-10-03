@@ -1,0 +1,36 @@
+// Dev workspace: yazi file tree on the left, helix on the right,
+// nushell tucked under the editor. Popups are bound in zellij.nix.
+layout {
+    default_tab_template {
+        pane size=1 borderless=true {
+            plugin location="zellij:tab-bar"
+        }
+        pane split_direction="vertical" {
+            pane name="files" size="26%" command="yazi"
+            children
+        }
+        pane size=1 borderless=true {
+            plugin location="zellij:status-bar"
+        }
+    }
+
+    tab name="dev" focus=true {
+        pane split_direction="horizontal" {
+            pane name="editor" command="hx" focus=true
+            pane name="shell" command="nu" size="24%"
+        }
+    }
+
+    new_tab_template {
+        pane size=1 borderless=true {
+            plugin location="zellij:tab-bar"
+        }
+        pane split_direction="vertical" {
+            pane name="files" size="26%" command="yazi"
+            pane name="shell" command="nu"
+        }
+        pane size=1 borderless=true {
+            plugin location="zellij:status-bar"
+        }
+    }
+}

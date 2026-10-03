@@ -20,6 +20,7 @@ in {
       cli_btop
       cli_yazi
       cli_helix
+      cli_zellij
       cli_nushell
       cli_tools
       cli_git
@@ -108,6 +109,7 @@ in {
             ".local/share/keyrings"
             ".config/noctalia"
             ".local/state/noctalia"
+            ".local/state/wireplumber"
             ".cache/noctalia"
             { directory = ".ssh"; mode = "0700"; }
             ".config/git"

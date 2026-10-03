@@ -8,6 +8,7 @@
 
       programs.pi-coding-agent = {
         enable = true;
+        extensions = [ ];
         extraEnv = {
           SHELL = "${pkgs.bash}/bin/bash";
           PATH = "${pkgs.lib.makeBinPath [
@@ -19,14 +20,6 @@
             pkgs.ketch
           ]}:$HOME/.local/bin:$PATH";
         };
-        extensions = [
-          "git:github.com/DietrichGebert/ponytail"
-          "npm:@narumitw/pi-wait-what"
-          "npm:@narumitw/pi-statusline"
-          "npm:pi-shazam"
-          "npm:pi-notify"
-          "npm:pi-ketch"
-        ];
       };
 
       # Symlink LSP binaries into ~/.local/bin/ — pi-shazam's trustedUserCandidates

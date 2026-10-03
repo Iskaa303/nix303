@@ -7,7 +7,8 @@
           postFixup = (oldAttrs.postFixup or "") + ''
             wrapProgram $out/bin/vesktop \
               --add-flags "--enable-features=UseOzonePlatform,WebRTCPipeWireCapturer" \
-              --add-flags "--ozone-platform=wayland"
+              --add-flags "--ozone-platform=wayland" \
+              --prefix LD_LIBRARY_PATH : ${prev.openh264}/lib
           '';
         });
       })

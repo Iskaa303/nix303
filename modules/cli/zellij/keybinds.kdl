@@ -1,0 +1,152 @@
+// Zellij keybinds (kept as a real .kdl file for syntax highlighting).
+//
+// Popups live in "shared" so they also fire while autolock has Zellij locked
+// (i.e. while Helix has focus). Every key here is Alt-based and none of them
+// are used by Helix.
+keybinds {
+    // Re-assess the lock state right after Enter, so launching a TUI locks
+    // immediately instead of waiting for reaction_seconds.
+    normal {
+        bind "Enter" {
+            WriteChars "\u{000D}"
+            MessagePlugin "autolock" {}
+        }
+    }
+
+    shared {
+        // ── Popups ───────────────────────────────────────────────────
+        bind "Alt g" {
+            Run "lazygit" {
+                floating true
+                width "90%"
+                height "90%"
+                x "5%"
+                y "5%"
+                close_on_exit true
+                name "lazygit"
+            }
+        }
+        bind "Alt y" {
+            Run "yazi" {
+                floating true
+                width "85%"
+                height "85%"
+                x "7%"
+                y "7%"
+                close_on_exit true
+                name "yazi"
+            }
+        }
+        bind "Alt r" {
+            Run "serpl" {
+                floating true
+                width "85%"
+                height "85%"
+                x "7%"
+                y "7%"
+                close_on_exit true
+                name "replace"
+            }
+        }
+        bind "Alt m" {
+            Run "pi" {
+                floating true
+                width "90%"
+                height "90%"
+                x "5%"
+                y "5%"
+                close_on_exit true
+                name "agent"
+            }
+        }
+        bind "Alt t" {
+            Run "sh" "-c" "f=$(tv files); test -n \"$f\" && zellij action edit \"$f\"" {
+                floating true
+                width "80%"
+                height "80%"
+                x "10%"
+                y "10%"
+                close_on_exit true
+                name "files"
+            }
+        }
+
+        // ── IDE mode toggle: yazi left · helix right · shell below ──
+        // Single key, both directions. Alt+Shift is unusable here because
+        // niri uses Alt+Shift for keyboard layout switching.
+        bind "Alt w" {
+            Run "sh" "-c" "ide-toggle" {
+                floating true
+                borderless true
+                width "1"
+                height "1"
+                x "0"
+                y "0"
+                pinned true
+                close_on_exit true
+                name "ide-toggle"
+            }
+        }
+        // Quick extra editor pane in the current tab.
+        bind "Alt v" {
+            Run "hx" {
+                name "editor"
+            }
+        }
+
+        // Ghostty's copy_to_clipboard only consumes Ctrl+Shift+C when Ghostty
+        // itself has a selection; otherwise the key reaches us, so copy the
+        // Zellij selection. This makes Ctrl+Shift+C work for both kinds of
+        // selection (Alt c does the same explicitly).
+        bind "Ctrl Shift c" {
+            Copy
+        }
+
+        // Copy the current selection. With copy_on_select=false, a plain drag
+        // makes a Zellij selection (no auto-copy); this copies it. For a
+        // Ghostty-native selection use Shift+drag then Ctrl+Shift+C instead.
+        bind "Alt c" {
+            Copy
+        }
+
+        // ── Focus movement (works while autolock has Zellij locked) ──
+        bind "Alt h" "Alt Left" {
+            MoveFocusOrTab "Left"
+        }
+        bind "Alt l" "Alt Right" {
+            MoveFocusOrTab "Right"
+        }
+        bind "Alt j" "Alt Down" {
+            MoveFocus "Down"
+        }
+        bind "Alt k" "Alt Up" {
+            MoveFocus "Up"
+        }
+
+        // Re-enable autolock after Alt z disabled it (no Shift: niri owns
+        // Alt+Shift for layout switching).
+        bind "Alt q" {
+            MessagePlugin "autolock" {
+                payload "enable"
+            }
+        }
+    }
+
+    // Escape hatch: Alt z disables autolock and unlocks Zellij.
+    locked {
+        bind "Alt z" {
+            MessagePlugin "autolock" {
+                payload "disable"
+            }
+            SwitchToMode "Normal"
+        }
+    }
+
+    // Single-key quit is a fat-finger hazard; require Ctrl Shift q.
+    shared_except "locked" {
+        unbind "Ctrl q"
+        bind "Ctrl Shift q" {
+            Quit
+        }
+    }
+}

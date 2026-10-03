@@ -1,11 +1,18 @@
 { inputs, ... }: {
-  flake.modules.nixos.desktop_noctalia = { config, lib, ... }: {
+  flake.modules.nixos.desktop_noctalia = { config, lib, pkgs, ... }: {
     services.upower.enable = true;
 
     hm = {
-      imports = [inputs.noctalia.homeModules.default];
+      # niri-flake ships its own programs.noctalia Home Manager module and
+      # already imports it via nixosModules.niri, so it declares
+      # programs.noctalia.checkConfig too. Importing the noctalia-shell flake's
+      # homeModules.default on top of that is a duplicate option definition and
+      # fails the eval with "already declared". Both modules write the same
+      # files (noctalia/config.toml, noctalia/palettes/*.json), so take the
+      # module from niri-flake and the pinned package from the flake.
       programs.noctalia = {
         enable = true;
+        package = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
         settings = {
           widget.clock = {
             format = "{:%Y-%m-%d %H:%M:%S}";

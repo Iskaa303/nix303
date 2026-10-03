@@ -1,0 +1,27 @@
+// Default session: a single nushell pane. Spawn the full IDE workspace with
+// Alt w (see keybinds.kdl), which opens the "dev" layout in a new tab.
+layout {
+    default_tab_template {
+        pane size=1 borderless=true {
+            plugin location="zellij:tab-bar"
+        }
+        children
+        pane size=1 borderless=true {
+            plugin location="zellij:status-bar"
+        }
+    }
+
+    tab name="shell" focus=true {
+        pane name="shell" command="nu"
+    }
+
+    new_tab_template {
+        pane size=1 borderless=true {
+            plugin location="zellij:tab-bar"
+        }
+        pane name="shell" command="nu"
+        pane size=1 borderless=true {
+            plugin location="zellij:status-bar"
+        }
+    }
+}

@@ -25,6 +25,10 @@
 
       programs.lazygit = {
         enable = true;
+        settings.os = {
+          edit = "hx-open {{filename}}";
+          editAtLine = "hx-open {{filename}}:{{line}}";
+        };
       };
     };
   };

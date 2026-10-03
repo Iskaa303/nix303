@@ -23,6 +23,23 @@
         };
       };
 
+      # niri auto-picked the NVIDIA dGPU as its render node (renderD129, holds
+      # /dev/nvidia*) while eDP-1/HDMI-A-1 scan out on the AMD iGPU (renderD128).
+      # Every app - Chromium, OBS - GL-renders on the iGPU, and an NVIDIA dma-buf
+      # cannot be imported into an AMD/Mesa context, so PipeWire screencast
+      # delivers zero frames: Discord rejects getDisplayMedia with
+      # INVALID_DISPLAY_CAPTURE_CONSTRAINTS and OBS records black. Pin the
+      # compositor to the iGPU so compositor and clients share one GPU.
+      debug = {
+        "render-drm-device" = "/dev/dri/renderD128";
+        # HDMI-A-1 is wired to the dGPU, so niri keeps a second NVIDIA renderer
+        # for it. The screencast buffer is still allocated on the NVIDIA device
+        # (modifier 0x20000001046bb04) even for eDP-1, and niri's iGPU renderer
+        # can't fill it. The invalid/linear modifier takes niri's CPU-copy path
+        # instead, so the frames cross the GPU boundary.
+        "force-pipewire-invalid-modifier" = true;
+      };
+
       environment = {
         NIXOS_OZONE_WL = "1";
         QT_QPA_PLATFORM = "wayland";

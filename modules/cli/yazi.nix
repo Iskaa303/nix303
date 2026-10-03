@@ -31,6 +31,16 @@
         mgr = {
           prepend_keymap = [
             {
+              on = [ "<C-h>" ];
+              run = "shell -- hx-open --hsplit \"$@\"";
+              desc = "Open in Helix (horizontal split)";
+            }
+            {
+              on = [ "<C-v>" ];
+              run = "shell -- hx-open --vsplit \"$@\"";
+              desc = "Open in Helix (vertical split)";
+            }
+            {
               on = [ "<A-d>" ];
               run = "plugin drag";
               desc = "Drag files";
@@ -87,7 +97,8 @@
       settings = {
         # yazi >= 25.x renamed [manager] to [mgr]
         mgr = {
-          ratio = [ 1 4 3 ];
+          # Single column: only the current directory. 0 hides parent/preview.
+          ratio = [ 0 1 0 ];
           sort_by = "natural";
           sort_sensitive = true;
           sort_reverse = false;
@@ -114,7 +125,7 @@
         };
         opener = {
           edit = [
-            { run = "hx %s"; block = true; desc = "Helix"; }
+            { run = "hx-open %s"; block = true; desc = "Helix"; }
           ];
           play = [
             { run = ''mpv %s''; orphan = true; for = "unix"; desc = "MPV"; }
