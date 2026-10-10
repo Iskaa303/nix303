@@ -1,55 +1,41 @@
 { ... }: {
-  flake.modules.nixos.cli_pi = { pkgs, inputs, username, ... }: {
-    nixpkgs.overlays = [ inputs.pi-flake.overlays.default ];
+  flake.modules.nixos.cli_pi = { inputs, ... }: {
+    # pkgs.pi / pkgs.pi-coding-agent come from here: pi_setup_303 pins the pi
+    # version itself, so pi-flake is not needed in this config.
+    nixpkgs.overlays = [ inputs.pi-setup.overlays.default ];
 
     hm = {
       disabledModules = [ "programs/pi-coding-agent.nix" ];
-      imports = [ inputs.pi-flake.homeManagerModules.default ];
 
-      programs.pi-coding-agent = {
+      # One module: pi, its nix-owned settings.json, and every extension.
+      imports = [ inputs.pi-setup.homeManagerModules.default ];
+
+      programs.pi-setup = {
         enable = true;
-        extensions = [ ];
-        extraEnv = {
-          SHELL = "${pkgs.bash}/bin/bash";
-          PATH = "${pkgs.lib.makeBinPath [
-            pkgs.bash pkgs.coreutils pkgs.nodejs pkgs.git pkgs.bun
-            pkgs.fd pkgs.ripgrep pkgs.gnutar
-            pkgs.gnugrep pkgs.gnused pkgs.findutils pkgs.gawk
-            pkgs.vscode-json-languageserver pkgs.typescript-language-server pkgs.rust-analyzer
-            pkgs.gopls pkgs.yaml-language-server pkgs.pyright
-            pkgs.ketch
-          ]}:$HOME/.local/bin:$PATH";
+        camoufox = true;
+
+        settings = {
+          defaultModel = "stealth/space-bunny-alpha";
+          defaultProvider = "openrouter";
+          defaultThinkingLevel = "high";
+          theme = "dark";
+          shellPath = "/run/current-system/sw/bin/nu";
+          # `packages` is filled in by the module with the nix extension paths;
+          # add npm:/git: sources here if you ever want one.
+          packages = [ ];
         };
       };
 
-      # Symlink LSP binaries into ~/.local/bin/ — pi-shazam's trustedUserCandidates
-      # checks this path as its first user-candidate location.
-      # pi-statusline config: add cost to the status line
+      # pi-statusline config. Remove this file (and the extension) to fall back
+      # to pi's own footer, which is clean but has no extension status row.
+      # No extensionStatusIcons mapping on purpose: extensions already put their
+      # own indicator first (ponytail renders "○ 🐴 ponytail: ⚡ FULL"), and
+      # pi-statusline splits that leading glyph off as the icon.
       home.file.".pi/agent/pi-statusline.json".text = builtins.toJSON {
-        segments = ["model" "thinking" "cwd" "branch" "tools" "context" "cost" "time"];
-      };
-
-      home.file.".local/bin/vscode-json-language-server".source = "${pkgs.vscode-json-languageserver}/bin/vscode-json-language-server";
-      home.file.".local/bin/typescript-language-server".source = "${pkgs.typescript-language-server}/bin/typescript-language-server";
-      home.file.".local/bin/rust-analyzer".source = "${pkgs.rust-analyzer}/bin/rust-analyzer";
-      home.file.".local/bin/gopls".source = "${pkgs.gopls}/bin/gopls";
-      home.file.".local/bin/yaml-language-server".source = "${pkgs.yaml-language-server}/bin/yaml-language-server";
-      home.file.".local/bin/pyright-langserver".source = "${pkgs.pyright}/bin/pyright-langserver";
-
-      # Disable pi-flake's broken node.js symlink (flat nix-store file;
-      # relative require fails). We create a real file via activation instead.
-      home.file.".pi/agent/npm/node_modules/vscode-jsonrpc/node.js".enable = false;
-
-      # vscode-jsonrpc compat shim + pi-shazam NixOS patches.
-      # Runs at every HM activation, idempotent.
-      home.file.".pi/agent/lib/shazam-compat.sh".source = ./pi-shazam-compat.sh;
-
-      home.activation.shazamCompat = ''
-        bash "$HOME/.pi/agent/lib/shazam-compat.sh"
-      '';
-
-      home.file.".pi/agent/trust.json".text = builtins.toJSON {
-        "/home/${username}" = true;
+        palettePreset = "tokyo-night";
+        density = "compact";
+        separator = "round";
+        segments = [ "model" "thinking" "cwd" "branch" "context" "cost" "time" ];
       };
     };
   };

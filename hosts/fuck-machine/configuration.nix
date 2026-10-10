@@ -101,6 +101,7 @@ in {
             "Videos"
             ".mozilla"
             ".cache/ketch"
+            ".cache/camoufox"
             ".config/ketch"
             ".config/mozilla"
             ".config/gh"

@@ -62,8 +62,8 @@
       url = "github:gmodena/nix-flatpak/?ref=latest";
     };
 
-    pi-flake = {
-      url = "github:ChauDucToan/pi-flake";
+    pi-setup = {
+      url = "github:Iskaa303/pi_setup_303";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
