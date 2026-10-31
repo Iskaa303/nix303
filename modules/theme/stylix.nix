@@ -4,6 +4,10 @@
 
     hm.home.pointerCursor.enable = true;
 
+    # shortcut: rofi is unused, and upstream stylix still sets the removed programs.rofi.font
+    # option, which home-manager warns about. Re-enable once stylix renames it.
+    hm.stylix.targets.rofi.enable = false;
+
     stylix = {
       enable = true;
       image = ../../assets/wallpaper.png;

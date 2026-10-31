@@ -50,8 +50,6 @@ in {
       app_sioyek
     ]);
 
-    boot.initrd.systemd.enable = true;
-
     networking.hostName = "fuck-machine";
     networking.networkmanager.enable = true;
 

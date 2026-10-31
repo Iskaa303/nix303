@@ -6,6 +6,8 @@
     hm.programs.nushell = {
       enable = true;
       configFile.source = ./config.nu;
+      # home.stateVersion < 26.11, so pick explicitly instead of relying on the shifting default
+      loadSessionVariables = false;
     };
 
     hm.programs.carapace = {

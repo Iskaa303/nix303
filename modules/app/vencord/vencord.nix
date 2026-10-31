@@ -71,7 +71,7 @@
             secretRingToneEnabler.enable = true;
             sendTimestamps.enable = true;
             silentTyping.enable = true;
-            tenorGifSearch.enable = true;
+            gifProviderSwitcher.enable = true;
             typingTweaks.enable = true;
             unlockedAvatarZoom.enable = true;
             voiceDownload.enable = true;
