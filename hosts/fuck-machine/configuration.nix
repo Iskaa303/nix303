@@ -42,6 +42,8 @@ in {
       app_mpv
       app_flameshot
       app_sober
+      app_mangohud
+      app_steam
       app_siyuan
       app_ayugram
       app_obs_studio
@@ -115,6 +117,8 @@ in {
             ".config/vesktop"
             ".config/Vencord"
             ".local/share/FreesmLauncher"
+            ".steam"
+            ".local/share/Steam"
             ".config/onlyoffice"
             ".cleanroom"
             "SiYuan"
