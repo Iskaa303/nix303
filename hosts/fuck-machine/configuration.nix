@@ -44,6 +44,7 @@ in {
       app_sober
       app_mangohud
       app_steam
+      game_yandere_simulator
       app_siyuan
       app_ayugram
       app_obs_studio
@@ -119,6 +120,7 @@ in {
             ".local/share/FreesmLauncher"
             ".steam"
             ".local/share/Steam"
+            ".local/share/umu"
             ".config/onlyoffice"
             ".cleanroom"
             "SiYuan"

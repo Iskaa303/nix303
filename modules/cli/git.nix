@@ -13,8 +13,18 @@
           safe = {
             directory = [ "/persist/etc/nixos" ];
           };
+          # Tool state must never end up staged: pi's Playwright MCP and virtual
+          # display write session files, screenshots and logs into the project.
+          core.excludesFile = "~/.config/git/ignore";
         };
       };
+
+      home.file.".config/git/ignore".text = ''
+        .playwright_mcp/
+        .pi/
+        .devenv/
+        *.log
+      '';
 
       programs.gh = {
         enable = true;

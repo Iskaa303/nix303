@@ -7,35 +7,48 @@
     hm = {
       disabledModules = [ "programs/pi-coding-agent.nix" ];
 
-      # One module: pi, its nix-owned settings.json, and every extension.
+      # One module: pi, its nix-owned settings.json, every extension, the
+      # always-on AGENTS.md, the loop agents and the virtual display tools.
       imports = [ inputs.pi-setup.homeManagerModules.default ];
 
       programs.pi-setup = {
         enable = true;
+        # real-Firefox fetch engine (the module cannot know you want it)
         camoufox = true;
 
+        # `packages`, `subagents.defaultSubagentOnlyExtensions` and the
+        # researcher/evidence-auditor overrides are written by the module, and
+        # subagents inherit the models below. Only what differs goes here.
         settings = {
-          defaultModel = "stealth/space-bunny-alpha";
-          defaultProvider = "openrouter";
+          # OpenCode Go: unprefixed model ids, one account.
+          defaultProvider = "opencode-go";
+          defaultModel = "deepseek-v4.1-flash";
           defaultThinkingLevel = "high";
-          theme = "dark";
+          # $SHELL is already nu, but pi's own default is /bin/sh on Linux and a
+          # shell swap must not be silent.
           shellPath = "/run/current-system/sw/bin/nu";
-          # `packages` is filled in by the module with the nix extension paths;
-          # add npm:/git: sources here if you ever want one.
-          packages = [ ];
+          theme = "dark";
+        };
+
+        # `settings.subagents` would be overwritten by the module (it fills in
+        # the extension wiring), so subagent settings belong here.
+        subagents = {
+          # Children start cheaper than the parent and escalate by agent
+          # frontmatter (planner pins deepseek-v4-pro).
+          defaultThinking = "medium";
         };
       };
 
-      # pi-statusline config. Remove this file (and the extension) to fall back
-      # to pi's own footer, which is clean but has no extension status row.
-      # No extensionStatusIcons mapping on purpose: extensions already put their
-      # own indicator first (ponytail renders "○ 🐴 ponytail: ⚡ FULL"), and
-      # pi-statusline splits that leading glyph off as the icon.
+      # pi-statusline. No `time` segment: it is a wall clock; the session-cost
+      # extension shows session duration plus the combined parent + subagent
+      # cost. No extensionStatusIcons mapping: extensions already put their own
+      # indicator first and pi-statusline splits the leading glyph off as the
+      # icon.
       home.file.".pi/agent/pi-statusline.json".text = builtins.toJSON {
         palettePreset = "tokyo-night";
         density = "compact";
         separator = "round";
-        segments = [ "model" "thinking" "cwd" "branch" "context" "cost" "time" ];
+        segments = [ "model" "thinking" "cwd" "branch" "tools" "context" "cost" ];
       };
     };
   };
