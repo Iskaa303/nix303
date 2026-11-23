@@ -20,54 +20,8 @@
       normal."C-k" = "jump_view_up";
       normal."C-l" = "jump_view_right";
 
-      # ── Normal · Git (lazygit) ─────────────────────────────────
-      # >/dev/tty lets the TUI render; reload-all picks up new commits.
-      normal."C-g" = [
-        ":write-all"
-        ":insert-output lazygit >/dev/tty"
-        ":redraw"
-        ":reload-all"
-      ];
-
-      # ── Normal · Search & replace (serpl + ripgrep / ast-grep) ──
-      # Interactive project-wide search/replace; reload picks up edits.
-      normal."C-r" = [
-        ":write-all"
-        ":insert-output serpl >/dev/tty"
-        ":redraw"
-        ":reload-all"
-      ];
-
-      # ── Normal · Fuzzy find (television) ───────────────────────
-      # t = files, T = live grep (opens at the matched line).
-      # Aborting tv leaves the temp file empty -> benign :open error.
-      normal."space".t = [
-        ":insert-output tv files > /tmp/hx-tv"
-        ":open %sh{cat /tmp/hx-tv}"
-        ":redraw"
-      ];
-      normal."space".T = [
-        ":insert-output tv text > /tmp/hx-tv"
-        ":open %sh{cat /tmp/hx-tv}"
-        ":redraw"
-      ];
-
-      # ── Normal · File explorer (yazi) ──────────────────────────
-      # Replaces the built-in explorer. e = workspace, E = buffer's dir.
-      normal."space".e = [
-        ":sh rm -f /tmp/hx-yazi"
-        ":insert-output yazi --chooser-file=/tmp/hx-yazi"
-        '':sh printf "\x1b[?1049h\x1b[?2004h" >/dev/tty''
-        ":open %sh{cat /tmp/hx-yazi}"
-        ":redraw"
-      ];
-      normal."space".E = [
-        ":sh rm -f /tmp/hx-yazi"
-        ":insert-output yazi \"%{buffer_name}\" --chooser-file=/tmp/hx-yazi"
-        '':sh printf "\x1b[?1049h\x1b[?2004h" >/dev/tty''
-        ":open %sh{cat /tmp/hx-yazi}"
-        ":redraw"
-      ];
+      # lazygit, serpl, tv and yazi are Zellij popups (Alt g/r/t/y): run them
+      # from there and they get real terminal space instead of Helix's tty.
 
       # ── Normal · tldr lookup ───────────────────────────────────
       # Select a word first (e.g. miw), then `space m`.

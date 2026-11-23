@@ -48,7 +48,6 @@ in {
       app_siyuan
       app_ayugram
       app_obs_studio
-      app_thunderbird
       app_qbittorrent
       app_sioyek
     ]);
@@ -101,6 +100,7 @@ in {
             "Games"
             "Videos"
             ".mozilla"
+            ".librewolf"
             ".cache/ketch"
             ".cache/camoufox"
             ".config/ketch"
@@ -139,7 +139,6 @@ in {
             ".config/obs-studio"
             ".config/sops"
             ".pi"
-            ".thunderbird"
             ".config/qBittorrent"
             ".local/share/qBittorrent"
             ".config/sioyek"

@@ -22,6 +22,8 @@
       pkgs.file
       pkgs.ocrmypdf
       pkgs.tlrc
+      # pi copies by shelling out to wl-copy/wl-paste on Wayland.
+      pkgs.wl-clipboard
     ];
   };
 }

@@ -4,10 +4,8 @@
       outputs = {
         "HDMI-A-1" = {
           position = { x = 0; y = 0; };
-          mode = {
-            width = 2560;
-            height = 1440;
-          };
+          # The monitor's preferred mode is 1440p60; this panel is 144 Hz.
+          mode = { width = 2560; height = 1440; refresh = 144.002; };
         };
         "eDP-1" = {
           position = { x = 2560; y = 0; };

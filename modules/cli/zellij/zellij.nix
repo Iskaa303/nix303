@@ -41,9 +41,17 @@
           show_release_notes = false;
           session_serialization = true;
 
-          # Keep Zellij's mouse: wheel scroll and click-to-focus stay native to
-          # Zellij. Hold SHIFT to bypass it into Ghostty for terminal-native
-          # selection / word-select / opening links.
+          # Write straight to the Wayland clipboard instead of OSC 52, which
+          # is length-capped - CopyLastCommandOutput of a long build log
+          # would arrive truncated.
+          copy_command = "wl-copy";
+          copy_clipboard = "system";
+
+          # The wheel and drag-selection stay with Zellij: Ghostty keeps no
+          # scrollback for the alternate screen Zellij draws in, so handing it
+          # the mouse leaves nothing to scroll. Plain drag selects inside Zellij
+          # (no SHIFT) and Ctrl+Shift+C copies it. SHIFT+drag bypasses into
+          # Ghostty for a terminal-native selection / word select / links.
           mouse_mode = true;
           copy_on_select = false;
 

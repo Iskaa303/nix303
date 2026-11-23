@@ -17,6 +17,13 @@
           widget.clock = {
             format = "{:%Y-%m-%d %H:%M:%S}";
           };
+          widget.mouse_battery = {
+            type = "battery";
+            device = "/org/freedesktop/UPower/devices/mouse_hidpp_battery_0";
+            display_mode = "glyph";
+            show_label = true;
+            label_content = "percent";
+          };
           bar = {
             end = [
               "media"
@@ -29,6 +36,7 @@
               "volume"
               "brightness"
               "battery"
+              "mouse_battery"
               "control-center"
               "session"
             ];

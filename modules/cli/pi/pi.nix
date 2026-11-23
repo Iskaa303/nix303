@@ -24,9 +24,9 @@
           defaultProvider = "opencode-go";
           defaultModel = "deepseek-v4.1-flash";
           defaultThinkingLevel = "high";
-          # $SHELL is already nu, but pi's own default is /bin/sh on Linux and a
-          # shell swap must not be silent.
-          shellPath = "/run/current-system/sw/bin/nu";
+          # pi's own default shell is /bin/sh on Linux; bash is what the bash
+          # tool and its callers expect.
+          shellPath = "/run/current-system/sw/bin/bash";
           theme = "dark";
         };
 
@@ -37,6 +37,14 @@
           # frontmatter (planner pins deepseek-v4-pro).
           defaultThinking = "medium";
         };
+      };
+
+      # rpiv-todo's widget panel: 12 rows is half a small terminal. Six rows
+      # plus the "+N more" hint; alt+e folds it to the heading. Not ctrl+shift+t
+      # (Ghostty new-tab) and not alt+o (zellij move-tab).
+      home.file.".config/rpiv-todo/config.json".text = builtins.toJSON {
+        maxWidgetLines = 6;
+        collapseKey = "alt+e";
       };
 
       # pi-statusline. No `time` segment: it is a wall clock; the session-cost

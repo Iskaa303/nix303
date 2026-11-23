@@ -45,15 +45,13 @@
             characterCounter.enable = true;
             copyEmojiMarkdown.enable = true;
             copyFileContents.enable = true;
-            copyStickerLinks.enable = true;
             copyUserUrls.enable = true;
             crashHandler.enable = true;
-            expressionCloner.enable = true;
+            expressionManager.enable = true;
             fixCodeblockGap.enable = true;
             fixImagesQuality.enable = true;
             forceOwnerCrown.enable = true;
             fullSearchContext.enable = true;
-            fullUserInChatbox.enable = true;
             gifPaste.enable = true;
             greetStickerPicker.enable = true;
             imageFilename.enable = true;

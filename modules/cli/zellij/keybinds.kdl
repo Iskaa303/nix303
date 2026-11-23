@@ -1,8 +1,8 @@
 // Zellij keybinds (kept as a real .kdl file for syntax highlighting).
 //
 // Popups live in "shared" so they also fire while autolock has Zellij locked
-// (i.e. while Helix has focus). Every key here is Alt-based and none of them
-// are used by Helix.
+// (i.e. while Helix has focus). Alt keys are free in Helix; the mouse belongs
+// to Ghostty, so nothing here depends on it.
 keybinds {
     // Re-assess the lock state right after Enter, so launching a TUI locks
     // immediately instead of waiting for reaction_seconds.
@@ -15,6 +15,15 @@ keybinds {
 
     shared {
         // ── Popups ───────────────────────────────────────────────────
+        // Session manager: every session, switch, rename, kill. Built in, so
+        // it works offline.
+        bind "Alt s" {
+            LaunchOrFocusPlugin "zellij:session-manager" {
+                floating true
+                move_to_focused_tab true
+            }
+        }
+
         bind "Alt g" {
             Run "lazygit" {
                 floating true
@@ -94,17 +103,20 @@ keybinds {
             }
         }
 
-        // Ghostty's copy_to_clipboard only consumes Ctrl+Shift+C when Ghostty
-        // itself has a selection; otherwise the key reaches us, so copy the
-        // Zellij selection. This makes Ctrl+Shift+C work for both kinds of
-        // selection (Alt c does the same explicitly).
+        // Copy the last command and its output, as delimited by nushell's
+        // OSC 133 markers - no dragging through a long log by hand.
+        bind "Ctrl Shift y" {
+            CopyLastCommandOutput
+        }
+
+        // Ghostty's copy_to_clipboard is bound `mixed`: it only consumes
+        // Ctrl+Shift+C when Ghostty itself has a selection. Otherwise the key
+        // reaches us, so a drag-selection made by Zellij copies with the same
+        // shortcut. Alt c does the same explicitly.
         bind "Ctrl Shift c" {
             Copy
         }
 
-        // Copy the current selection. With copy_on_select=false, a plain drag
-        // makes a Zellij selection (no auto-copy); this copies it. For a
-        // Ghostty-native selection use Shift+drag then Ctrl+Shift+C instead.
         bind "Alt c" {
             Copy
         }
