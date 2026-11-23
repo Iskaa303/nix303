@@ -1,5 +1,8 @@
 {
-  flake.modules.nixos.desktop_niri = {
+  flake.modules.nixos.desktop_niri = { config, ... }:
+  let
+    colors = config.lib.stylix.colors.withHashtag;
+  in {
     hm.programs.niri.settings = {
       outputs = {
         "HDMI-A-1" = {
@@ -73,6 +76,13 @@
             { app-id = "^mpv$"; }
           ];
           default-column-width = { proportion = 0.5; };
+        }
+        {
+          # same binary for both profiles, only the wayland app-id differs.
+          matches = [
+            { app-id = "^librewolf-hardened$"; }
+          ];
+          border.active.color = colors.base0E;
         }
       ];
     };

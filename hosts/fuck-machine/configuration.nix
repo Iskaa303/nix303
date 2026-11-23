@@ -34,7 +34,7 @@ in {
       cli_anime
       cli_lenovo
       theme_stylix
-      app_firefox
+      app_librewolf
       app_ghostty
       app_vencord
       app_freesm

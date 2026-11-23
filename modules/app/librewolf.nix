@@ -1,5 +1,5 @@
 { inputs, ... }: {
-  flake.modules.nixos.app_firefox = { config, userVars, lib, pkgs, ... }:
+  flake.modules.nixos.app_librewolf = { config, userVars, lib, pkgs, ... }:
   let
     colors = config.lib.stylix.colors.withHashtag;
     addons = pkgs.nur.repos.rycee.firefox-addons;
@@ -23,8 +23,7 @@
       };
     };
 
-    # Home-manager's `bookmarks` writes browser.bookmarks.file, which Firefox no
-    # longer reads, so bookmarks come from the enterprise policy instead.
+    # hm's `bookmarks` writes a file LibreWolf no longer reads.
     bookmarks = [
       { Title = "YouTube"; URL = "https://www.youtube.com"; Placement = "toolbar"; }
       { Title = "Google Messages"; URL = "https://messages.google.com"; Placement = "toolbar"; }
@@ -38,27 +37,20 @@
     commonPrefs = {
       "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
       "sidebar.position_start" = true;
-      # Home-manager drops the extensions straight into the profile, and
-      # Firefox auto-disables anything found outside its default scopes.
+      # hm drops the extensions into the profile; LibreWolf disables those scopes.
       "extensions.enabledScopes" = lib.mkForce 15;
       "extensions.autoDisableScopes" = lib.mkForce 0;
-      # librewolf:<profile>/<url> links are handed to the OS dispatcher, so a
-      # Sidebery bookmark can bring up the other profile.
       "network.protocol-handler.external.librewolf" = true;
-      # Dark chrome everywhere, following the nord palette in userChrome.
       "ui.systemUsesDarkTheme" = 1;
       "browser.theme.content-theme" = 1;
       "browser.theme.toolbar-theme" = 1;
       "browser.in-content.dark-mode" = true;
       "layout.css.prefers-color-scheme.content-override" = 0;
       "devtools.theme" = "dark";
-      # Cookies are isolated per container, so one profile can hold several
-      # accounts (personal Google, uni Microsoft, ...) without mixing them.
       "privacy.userContext.enabled" = true;
       "privacy.userContext.ui.enabled" = true;
     };
 
-    # Only for the profiles that carry Sidebery: it becomes the whole tab UI.
     sideberyPrefs = {
       "sidebar.revamp" = true;
       "sidebar.verticalTabs" = true;
@@ -84,8 +76,7 @@
       "dom.webgpu.enabled" = true;
     };
 
-    # Firefox 128+ clears cookies via privacy.clearOnShutdown_v2.* and ignores
-    # the old privacy.clearOnShutdown.cookies, so both are set here.
+    # LibreWolf 128+ only honours privacy.clearOnShutdown_v2.*.
     noCookies = {
       "network.cookie.lifetimePolicy" = 2;
       "privacy.sanitize.sanitizeOnShutdown" = true;
@@ -100,8 +91,19 @@
       "privacy.clearOnShutdown_v2.cookiesAndStorage" = false;
     };
 
+    # RFP's per-target twin: same uniformisation, without the light colour scheme.
+    fingerprintProtection = {
+      "privacy.fingerprintingProtection" = true;
+      "privacy.fingerprintingProtection.overrides" =
+        "+AllTargets,-CSSPrefersColorScheme";
+    };
+    # FPP's UA targets veto general.useragent.override.
+    fingerprintProtectionSpoofedUa = fingerprintProtection // {
+      "privacy.fingerprintingProtection.overrides" =
+        "+AllTargets,-CSSPrefersColorScheme,-NavigatorUserAgent,-HttpUserAgent";
+    };
+
     userChrome = { accent, sidebar }: ''
-      /* nord chrome: stylix base00 background, base05 text, square corners */
       * { border-radius: 0 !important; }
       #navigator-toolbox,
       #nav-bar,
@@ -120,7 +122,6 @@
       #navigator-toolbox { border-bottom: 2px solid ${colors.base02} !important; }
       #sidebar-header { display: none !important; }
       ${lib.optionalString sidebar ''
-        /* Sidebery is the tab UI, so chrome's tab strip and tool rail go away */
         #TabsToolbar { display: none !important; }
         #sidebar-container,
         #sidebar-launcher-splitter,
@@ -129,11 +130,28 @@
       ''}
     '';
 
+    # Sidebery writes its theme as inline --s-* vars, so only user !important wins.
     userContent = ''
       @-moz-document url-prefix("about:") {
         :root {
           --in-content-page-background: ${colors.base00} !important;
           --in-content-page-color: ${colors.base05} !important;
+        }
+      }
+      @-moz-document url-prefix("moz-extension://") {
+        body {
+          --s-frame-bg: ${colors.base00} !important;
+          --s-frame-fg: ${colors.base05} !important;
+          --s-toolbar-bg: ${colors.base01} !important;
+          --s-toolbar-fg: ${colors.base05} !important;
+          --s-toolbar-border: ${colors.base03} !important;
+          --s-act-el-bg: ${colors.base02} !important;
+          --s-act-el-fg: ${colors.base06} !important;
+          --s-act-el-border: ${colors.base0D} !important;
+          --s-popup-bg: ${colors.base01} !important;
+          --s-popup-fg: ${colors.base05} !important;
+          --s-popup-border: ${colors.base03} !important;
+          --s-accent: ${colors.base0D} !important;
         }
       }
     '';
@@ -163,13 +181,8 @@
         l10nID = "";
       }) names;
     };
-    # One cookie jar per account. A container cannot change javascript, webgl,
-    # webgpu or the extension set; those stay per profile, so there are two:
-    # `private` (no JS, no GPU, no cookies) and `main` (JS + GPU, keeps cookies).
-    # The uncontainerised tabs of either profile are the "private" jar.
+    # Containers isolate cookies only, so JS and the GPU split by profile.
     profileContainers = {
-      # hardened runs no javascript and keeps no cookies, so a container would
-      # only add a label: no jar to separate.
       private = [ ];
       main = [ "General" "Study" "Hardened" ];
     };
@@ -187,12 +200,9 @@
     nixpkgs.overlays = [ inputs.nur.overlays.default ];
 
     hm = {
-      # the pinned stylix does ship a librewolf target, but it only injects fonts
       stylix.targets.librewolf.profileNames = [ "private" "main" ];
 
-      # Firefox rewrites containers.json on first run (it even adds its own
-      # "Shopping" identity), so the declared set is reinstalled every switch
-      # from a home-manager file, which keeps the store paths GC-safe.
+      # LibreWolf rewrites containers.json on first run and adds "Shopping".
       home.file = lib.mapAttrs' (profile: names: lib.nameValuePair ".config/librewolf-containers/${profile}.json" { text = containersFor names; }) (
         lib.filterAttrs (_: names: names != [ ]) profileContainers
       );
@@ -208,18 +218,12 @@
           )
         );
 
-      # Firefox writes its add-on database on first start with every
-      # profile-scope extension marked disabled, and the scope prefs never flip
-      # one back on. Dropping the database makes it re-detect them enabled.
-      # Sidebery also caches Firefox's container list and pushes it back, which
-      # is what kept resurrecting a "Shopping" container; its cache is dropped
-      # too, so the declared set is the only one.
+      # LibreWolf disables profile-scope add-ons and Sidebery caches containers.
       home.activation.libreWolfExtensionDb =
         inputs.home-manager.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
           for dir in "$HOME"/.librewolf/*/; do
             rm -f "$dir/extensions.json" "$dir/addonStartup.json.lz4"
-            # grep exits 1 when a profile has no Sidebery yet, and the activation
-            # script runs with -e -o pipefail; swallow it.
+            # grep exits 1 on a profile without Sidebery, and activation runs -e -o pipefail.
             uuid=$(grep -o '3c078156-979c-498b-8990-85f7987dd929}.\{0,8\}[0-9a-f-]\{36\}' "$dir/prefs.js" 2>/dev/null | grep -o '[0-9a-f-]\{36\}$' | head -1 || true)
             if [ -n "$uuid" ]; then
               rm -rf "$dir/storage/default/moz-extension+++""$uuid"*
@@ -227,11 +231,18 @@
           done
         '';
 
+      # nothing an earlier config wrote into the hardened profile survives.
+      home.activation.libreWolfHardenedWipe =
+        inputs.home-manager.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          rm -f "$HOME"/.librewolf/private/places.sqlite* \
+                "$HOME"/.librewolf/private/cookies.sqlite* \
+                "$HOME"/.librewolf/private/sessionstore.jsonlz4
+        '';
+
       programs.librewolf = {
         enable = true;
 
-        # home-manager has one policy set per browser, so main and study share a
-        # union of their cookie allow-lists; each profile still only visits its own.
+        # one policy set per browser, so both profiles share the cookie allow-list
         policies = {
           Cookies = {
             Behavior = "reject-tracker";
@@ -247,9 +258,15 @@
             sidebar = true;
             accent = colors.base08;
             extensions = [ addons.ublock-origin addons.sidebery ];
-            settings = webglOff // noCookies // {
+            settings = webglOff // noCookies // fingerprintProtectionSpoofedUa // {
               "javascript.enabled" = false;
-              "privacy.resistFingerprinting" = true;
+              # RFP would only veto the UA override; its JS targets never run.
+              "privacy.resistFingerprinting" = false;
+              "general.useragent.override" =
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:160.0) Gecko/20100101 Firefox/160.0";
+              "places.history.enabled" = false;
+              # policy bookmarks are installation-wide, so they are hidden here
+              "browser.toolbars.bookmarks.visibility" = "never";
             };
           };
 
@@ -263,10 +280,8 @@
               addons.return-youtube-dislikes
               addons.sidebery
             ];
-            settings = webglOn // keptCookies // {
-              # LibreWolf ships resistFingerprinting on by default and it spoofs
-              # prefers-color-scheme to light, which is what made every site
-              # light despite the dark theme prefs.
+            settings = webglOn // keptCookies // fingerprintProtection // {
+              # resistFingerprinting spoofs prefers-color-scheme to light.
               "privacy.resistFingerprinting" = false;
             };
           };
@@ -279,19 +294,22 @@
           profile=main
           url=""
           case "$arg" in
-            # librewolf:<profile>/<url> - how Sidebery bookmarks jump between profiles
+            # librewolf:<profile>/<url> is how Sidebery bookmarks switch profiles
             librewolf:*) rest="''${arg#librewolf:}"; profile="''${rest%%/*}"; case "$rest" in */*) url="''${rest#*/}" ;; *) url="" ;; esac ;;
             study:*|hardened:*) profile=main; url="''${arg#*:}" ;;
             private|main) profile="$arg"; url="''${2:-}" ;;
             *://*) url="$arg" ;;
           esac
           case "$profile" in private|main) ;; *) profile=main ;; esac
-          # Firefox rewrites containers.json on its own (and had inherited an
-          # unrelated "Shopping" identity), so the declared set is reinstalled
-          # before every launch, not only on rebuild.
           if [ -f "$HOME/.config/librewolf-containers/$profile.json" ]; then
             install -m 0644 "$HOME/.config/librewolf-containers/$profile.json" "$HOME/.librewolf/$profile/containers.json"
           fi
+          # Sidebery's storage records the tabs it saw, i.e. history.
+          if [ "$profile" = private ]; then
+            rm -rf "$HOME/.librewolf/private/storage/default/moz-extension+++"*
+          fi
+          # a separate wayland app-id is what niri keys the violet border on.
+          [ "$profile" = private ] && export MOZ_APP_REMOTINGNAME=librewolf-hardened
           if [ -n "$url" ]; then
             exec ${config.home-manager.users.${userVars.username}.programs.librewolf.finalPackage}/bin/librewolf -P "$profile" "$url"
           fi
@@ -312,8 +330,6 @@
           ];
         };
 
-        # A container cannot start another browser, but a URL can: these
-        # schemes hand the link to the profile that has the right settings.
         librewolf-private = {
           name = "LibreWolf Hardened";
           exec = "librewolf-dispatch private";
@@ -322,8 +338,6 @@
         };
       };
 
-      # External links pick a profile by host; clicks inside a browser stay in
-      # the profile that opened them, which is deliberate.
       xdg.mimeApps = {
         enable = true;
         defaultApplications = {

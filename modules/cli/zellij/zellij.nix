@@ -1,4 +1,4 @@
-{ ... }: {
+{ inputs, ... }: {
   flake.modules.nixos.cli_zellij = { pkgs, ... }:
     let
       hxOpen = pkgs.writeShellApplication {
@@ -14,6 +14,17 @@
     in
     {
       hm.home.packages = [ hxOpen ideToggle ];
+
+      # Seed the permission cache, or every first start blocks on a y/n prompt.
+      hm.home.activation.zellijPluginPermissions =
+        inputs.home-manager.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          cache="''${XDG_CACHE_HOME:-$HOME/.cache}/zellij/permissions.kdl"
+          if [ ! -e "$cache" ]; then
+            mkdir -p "$(dirname "$cache")"
+            printf '"%s" {\n    ChangeApplicationState\n    ReadApplicationState\n}\n' \
+              "$HOME/.config/zellij/plugins/autolock.wasm" > "$cache"
+          fi
+        '';
 
       hm.programs.zellij = {
         enable = true;
