@@ -5,6 +5,92 @@
     addons = pkgs.nur.repos.rycee.firefox-addons;
     sidebery = "{3c078156-979c-498b-8990-85f7987dd929}";
 
+    # Sidebery commands that are not in the manifest's suggested keys. Firefox
+    # keeps command shortcuts in extension-settings.json, so these are written
+    # there; the in-sidebar keys live in extension storage (a database file).
+    sideberyKeys = {
+      "down" = "Alt+J";
+      "up" = "Alt+K";
+      "down_shift" = "Alt+Shift+J";
+      "up_shift" = "Alt+Shift+K";
+      "select_all" = "Alt+A";
+      "rm_tab_on_panel" = "Alt+D";
+      "unload_tabs" = "Alt+X";
+      "duplicate_tabs" = "Alt+Shift+D";
+      "fold_branch" = "Alt+Shift+H";
+      "expand_branch" = "Alt+Shift+L";
+      "activate_prev_active_tab" = "Alt+U";
+      "move_tabs_down" = "Ctrl+Alt+J";
+      "move_tabs_up" = "Ctrl+Alt+K";
+      "tabs_indent" = "Ctrl+Alt+L";
+      "tabs_outdent" = "Ctrl+Alt+H";
+      "switch_to_panel_1" = "Ctrl+Alt+1";
+      "switch_to_panel_2" = "Ctrl+Alt+2";
+      "switch_to_panel_3" = "Ctrl+Alt+3";
+    };
+    sideberyCommandSettings = lib.mapAttrs (_: shortcut: {
+      precedenceList = [ { id = sidebery; installDate = 0; value = { inherit shortcut; }; enabled = true; } ];
+    }) sideberyKeys;
+
+    tridactylrc = ''
+      " ~/.config/tridactyl/tridactylrc, sourced at startup by tridactyl-native.
+
+      colourscheme stylix
+
+      " Smooth scrolling: the press starts a glide, the release stops it.
+      set smoothscroll true
+      unbind h
+      unbind j
+      unbind k
+      unbind l
+      unbind <C-u>
+      unbind <C-d>
+      unbind <C-f>
+      unbind <C-b>
+      bind <D-h> scrollstart -100 0
+      bind <D-j> scrollstart 0 100
+      bind <D-k> scrollstart 0 -100
+      bind <D-l> scrollstart 100 0
+      bind <DC-d> scrollstart 0 500
+      bind <DC-u> scrollstart 0 -500
+      bind <DC-f> scrollstart 0 1000
+      bind <DC-b> scrollstart 0 -1000
+      bind <U-h> scrollstop
+      bind <U-j> scrollstop
+      bind <U-k> scrollstop
+      bind <U-l> scrollstop
+      bind <UC-d> scrollstop
+      bind <UC-u> scrollstop
+      bind <UC-f> scrollstop
+      bind <UC-b> scrollstop
+
+      " Helix: gl is the right edge of the line, ge the end of the file. gh
+      " already means home in tridactyl.
+      bind gl scrollto 100 x
+      bind ge scrollto 100
+    '';
+
+    tridactylTheme = ''
+      /* stylix palette; loaded by `colourscheme stylix` above. */
+      :root {
+        --tridactyl-bg: ${colors.base00};
+        --tridactyl-fg: ${colors.base05};
+        --tridactyl-status-bg: ${colors.base01};
+        --tridactyl-status-fg: ${colors.base05};
+        --tridactyl-status-border: 1px solid ${colors.base02};
+        --tridactyl-hintspan-bg: ${colors.base0D};
+        --tridactyl-hintspan-fg: ${colors.base00};
+        --tridactyl-hintspan-active-bg: ${colors.base0A};
+        --tridactyl-hintspan-active-fg: ${colors.base00};
+        --tridactyl-hint-bg: ${colors.base02};
+        --tridactyl-hint-outline: 1px solid ${colors.base0D};
+        --tridactyl-hint-active-bg: ${colors.base0D};
+        --tridactyl-hint-active-fg: ${colors.base00};
+        --tridactyl-hint-active-outline: 1px solid ${colors.base0D};
+        --tridactyl-search-highlight-color: ${colors.base0A};
+      }
+    '';
+
     search = {
       force = true;
       default = "SearXNG";
@@ -49,6 +135,10 @@
       "devtools.theme" = "dark";
       "privacy.userContext.enabled" = true;
       "privacy.userContext.ui.enabled" = true;
+      # the inertial wheel model, and a spring stiff enough that it settles
+      # instead of drifting past the line you aimed at.
+      "general.smoothScroll.msdPhysics.enabled" = true;
+      "general.smoothScroll.msdPhysics.slowdownSpringConstant" = 2500;
     };
 
     sideberyPrefs = {
@@ -218,6 +308,25 @@
           )
         );
 
+      xdg.configFile."tridactyl/tridactylrc".text = tridactylrc;
+      xdg.configFile."tridactyl/themes/stylix.css".text = tridactylTheme;
+
+      home.activation.libreWolfSideberyKeys =
+        inputs.home-manager.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          for dir in "$HOME"/.librewolf/*/; do
+            [ -d "$dir" ] || continue
+            file="$dir"extension-settings.json
+            [ -e "$file" ] || echo '{}' > "$file"
+            # the version is left alone: an older file gets migrated on next start.
+            if ${lib.getExe pkgs.jq} --argjson cmds '${builtins.toJSON sideberyCommandSettings}' \
+                '.commands = ((.commands // {}) + $cmds) | .version //= 4' "$file" > "$file.tmp"; then
+              mv "$file.tmp" "$file"
+            else
+              rm -f "$file.tmp"
+            fi
+          done
+        '';
+
       # LibreWolf disables profile-scope add-ons and Sidebery caches containers.
       home.activation.libreWolfExtensionDb =
         inputs.home-manager.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -241,6 +350,9 @@
 
       programs.librewolf = {
         enable = true;
+
+        # tridactyl sources its rc through the native messenger.
+        nativeMessagingHosts = [ pkgs.tridactyl-native ];
 
         # one policy set per browser, so both profiles share the cookie allow-list
         policies = {
@@ -276,6 +388,7 @@
             accent = colors.base0D;
             extensions = [
               addons.ublock-origin
+              addons.tridactyl
               addons.sponsorblock
               addons.return-youtube-dislikes
               addons.sidebery
